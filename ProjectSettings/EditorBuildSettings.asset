@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Jimi-Test.unity
+    guid: c28ef4a0c6421444ca4bc0a1826f872e
+  - enabled: 1
+    path: Assets/Scenes/Warehouse.unity
+    guid: 2ebcbf9f69d37174d8f2dc5b5437d9f4
   m_configObjects: {}
