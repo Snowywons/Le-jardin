@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e018c0da3e6aacf4b8a85f5f587168e3, type: 3}
+  m_Name: Citrouille
+  m_EditorClassIdentifier: 
+  nom: Citrouille
+  prixBase: 15
+  maturingTime: 2
+  young: {fileID: 6138045074968672255, guid: 6e8167badc38ef243b362f8eab15c7b2, type: 3}
+  mature: {fileID: 1674102243442382005, guid: 7159618e80ecd0441b2c8cf93ea05d5c, type: 3}
