@@ -11,6 +11,7 @@ public class InventoryComponent : MonoBehaviour
     [SerializeField] GameObject content;
     [SerializeField] GameObject slotPrefab;
     [SerializeField] GameObject itemPrefab;
+
     private static List<Item> items;
     private static List<Slot> slots;
 
@@ -19,10 +20,30 @@ public class InventoryComponent : MonoBehaviour
         items = new List<Item>();
         slots = new List<Slot>();
 
+        DeleteExistingSlots();
+
         for (int i = 0; i < Capacity; i++)
         {
             CreateNewSlot();
         }
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if (level == SceneNavigatorComponent.WAREHOUSE)
+        {
+
+        }
+
+        if (level == SceneNavigatorComponent.WORLD)
+        {
+
+        }
+    }
+
+    private void DeleteExistingSlots()
+    {
+        content.transform.Clear();
     }
 
     public void Add(InventoryItem item)
@@ -49,7 +70,7 @@ public class InventoryComponent : MonoBehaviour
         newItem.GetComponent<Image>().sprite = item.Sprite;
         newItem.GetComponentInChildren<Text>().text = $"{item.Quantity}";
 
-        items.Add(new Item(item.ID, newItem, 1));
+        items.Add(new Item(item.ID, newItem, 1, item.Sprite));
 
         emptySlot.MarkAsFilled();
     }
@@ -63,6 +84,7 @@ public class InventoryComponent : MonoBehaviour
     {
         GameObject slot = Instantiate(slotPrefab, content.transform);
         slot.name = $"Slot [{slots.Count}]";
+        slot.GetComponentInChildren<Text>().text = $"{slots.Count + 1}";
         slots.Add(new Slot(slot, false));
     }
 
@@ -109,12 +131,14 @@ public class InventoryComponent : MonoBehaviour
         public int id;
         public GameObject item;
         public int quantity;
+        public Sprite sprite;
 
-        public Item(int id, GameObject item, int quantity)
+        public Item(int id, GameObject item, int quantity, Sprite sprite)
         {
             this.id = id;
             this.item = item;
             this.quantity = quantity;
+            this.sprite = sprite;
         }
     }
 }
