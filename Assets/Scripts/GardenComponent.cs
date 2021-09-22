@@ -10,6 +10,6 @@ public class GardenComponent : MonoBehaviour
 
     public void Example()
     {
-        GameSystem.Instance.Inventory.Add();
+        //GameSystem.Instance.Inventory.Add();
     }
 }

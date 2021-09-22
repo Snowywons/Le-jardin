@@ -8,4 +8,9 @@ public class WarehouseComponent : MonoBehaviour
     {
         Debug.Log("Warehouse test function called");
     }
+
+    private void Testt()
+    {
+        //GameSystem.Instance.Clock.
+    }
 }

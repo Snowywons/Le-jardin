@@ -11,7 +11,7 @@ public class DontDestroyOnLoadComponent : MonoBehaviour
         if (obj && obj != gameObject)
         {
             Debug.Log($"{gameObject.name} destroyed");
-            Destroy(obj);
+            Destroy(gameObject);
         }
     }
 
