@@ -5,5 +5,5 @@ using UnityEngine.Events;
 
 public class OnClickComponent : MonoBehaviour
 {
-    public UnityEvent OnClick;
+    public UnityEvent OnClick = new UnityEvent();
 }

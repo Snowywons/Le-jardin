@@ -8,11 +8,8 @@ using UnityEngine;
 public class WateringComponent : MonoBehaviour
 {
     
-    public void Arroser(TileComponent[] tiles)
+    public void Arroser( )
     {
-        foreach (TileComponent tile in tiles) 
-        {
-            
-        }
+        
     }
 }
