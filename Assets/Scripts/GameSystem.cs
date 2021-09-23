@@ -13,9 +13,12 @@ public class GameSystem : MonoBehaviour
 
     private void Awake()
     {
-        Instance = GetComponent<GameSystem>();
-        Inventory = inventory;
-        Clock = clock;
+        if (!Instance)
+        {
+            Instance = GetComponent<GameSystem>();
+            Inventory = inventory;
+            Clock = clock;
+        }
     }
 
     private void Start()
