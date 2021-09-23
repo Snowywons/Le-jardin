@@ -8,6 +8,8 @@ public class TileComponent : MonoBehaviour
     public bool isWet;
     public PlantType plante;
     public int age;
+    public Material wetMaterial;
+    public Material dryMaterial;
 
     private Transform planteMature;
     public bool instantGrow; // For Debug Only
@@ -46,6 +48,20 @@ public class TileComponent : MonoBehaviour
         }
     }
 
+    public void OnInteract()
+    {
+        
+        if(plante != null && age >= plante.maturingTime)
+        {
+            Harvest();
+        }
+        else
+        {
+            isWet = true;
+            GetComponent<MeshRenderer>().material = wetMaterial;
+        }
+    }
+
     private void TileReset()
     {
         age = 0;
@@ -58,18 +74,24 @@ public class TileComponent : MonoBehaviour
     public void OnDayAdvance()
     {
         Debug.Log("advance");
-        if (plante == null) return;
+        
+        
         if (isWet)
         {
-            age++;
-            if (age == plante.maturingTime)
-            {
-                planteMature = Instantiate(plante.mature);
-                planteMature.position = new Vector3(0, 0.5f, 0);
-                planteMature.SetParent(transform, false);
-            }
+            GetComponent<MeshRenderer>().material = dryMaterial;
             isWet = false;
+            if (plante != null)
+            {
+                age++;
+                if (age == plante.maturingTime)
+                {
+                    planteMature = Instantiate(plante.mature);
+                    planteMature.position = new Vector3(0, 0.5f, 0);
+                    planteMature.SetParent(transform, false);
+                }
+            }
         }
+
     }
 
     public void Update()
@@ -78,10 +100,6 @@ public class TileComponent : MonoBehaviour
         {
             OnDayAdvance();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
-            isWet = true;
-        }
+        
     }
 }
