@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class WarehouseComponent : MonoBehaviour
 {
-    public void Test()
+    public void Enter()
     {
-        Debug.Log("Warehouse test function called");
+        GameSystem.Instance.Clock.Pause();
     }
 
-    private void Testt()
+    public void Exit()
     {
-        //GameSystem.Instance.Clock.
+        GameSystem.Instance.Clock.Resume();
     }
 }
