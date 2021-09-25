@@ -12,12 +12,12 @@ public class InventoryComponent : MonoBehaviour
     [SerializeField] GameObject slotPrefab;
     [SerializeField] GameObject itemPrefab;
 
-    private static List<Item> items;
+
     private static List<Slot> slots;
+    private Slot selected;
 
     private void Start()
     {
-        items = new List<Item>();
         slots = new List<Slot>();
 
         DeleteExistingSlots();
@@ -26,6 +26,25 @@ public class InventoryComponent : MonoBehaviour
         {
             CreateNewSlot();
         }
+        Add(FindObjectOfType<WateringComponent>());
+        Add(FindObjectOfType<HarvestingComponent>());
+    }
+    private void Update()
+    {
+        foreach(Slot slot in slots)
+        {
+            if (Input.GetKeyDown(slot.hotkey))
+            {
+                selected = slot;
+                Debug.Log(slot.hotkey);
+                break;
+            }
+        }
+    }
+
+    public InventoryItem GetSelected()
+    {
+        return selected?.content?.item;
     }
 
     private void OnLevelWasLoaded(int level)
@@ -46,7 +65,7 @@ public class InventoryComponent : MonoBehaviour
         content.transform.Clear();
     }
 
-    public void Add(InventoryItem item)
+    public void Add(InventoryItem item, int quantity = 1)
     {
         // Security check
         if (item == null)
@@ -57,27 +76,27 @@ public class InventoryComponent : MonoBehaviour
 
         // Update quantity or create a new one
         if (ItemExists(item, out Item itemFound))
-            itemFound.item.GetComponentInChildren<Text>().text = $"{++itemFound.quantity}";
+            itemFound.icon.GetComponentInChildren<Text>().text = $"{itemFound.quantity  + quantity}";
         else if (!IsFull())
-            CreateNewItem(item);
+            CreateNewItem(item, quantity);
     }
 
-    private void CreateNewItem(InventoryItem item)
+    private void CreateNewItem(InventoryItem item, int quantity)
     {
         Slot emptySlot = GetEmptySlot();
+        if (emptySlot == null) return;
 
         GameObject newItem = Instantiate(itemPrefab, emptySlot.prefab.transform);
         newItem.GetComponent<Image>().sprite = item.Sprite;
-        newItem.GetComponentInChildren<Text>().text = $"{item.Quantity}";
+        newItem.GetComponentInChildren<Text>().text = $"{quantity}";
 
-        items.Add(new Item(item.ID, newItem, 1, item.Sprite));
+        emptySlot.content = new Item(item, newItem, quantity);
 
-        emptySlot.MarkAsFilled();
     }
 
     private Slot GetEmptySlot()
     {
-        return slots.FirstOrDefault(s => s.filled == false);
+        return slots.FirstOrDefault(s => s.content == null);
     }
 
     private void CreateNewSlot()
@@ -85,13 +104,22 @@ public class InventoryComponent : MonoBehaviour
         GameObject slot = Instantiate(slotPrefab, content.transform);
         slot.name = $"Slot [{slots.Count}]";
         slot.GetComponentInChildren<Text>().text = $"{slots.Count + 1}";
-        slots.Add(new Slot(slot, false));
+        slots.Add(new Slot(slot, null, (KeyCode)((int)KeyCode.Alpha1+slots.Count)));
     }
+
 
     private bool ItemExists(InventoryItem item, out Item itemFound)
     {
-        itemFound = items.FirstOrDefault(i => i.id == item.ID);
-        return itemFound != null;
+        foreach(Slot slot in slots)
+        {
+            if(slot.content != null && slot.content.item.ID == item.ID)
+            {
+                itemFound = slot.content;
+                return true;
+            }
+        }
+        itemFound = null;
+        return false;
     }
 
     public void Expand()
@@ -107,38 +135,34 @@ public class InventoryComponent : MonoBehaviour
         }
     }
 
-    public bool IsFull() => items.Count >= Capacity;
+    public bool IsFull() => slots.All(x => x.content != null);
 
     private class Slot
     {
         public GameObject prefab;
-        public bool filled;
+        public Item content;
+        public KeyCode hotkey;
 
-        public Slot(GameObject prefab, bool filled)
+        public Slot(GameObject prefab, Item content, KeyCode hotkey)
         {
             this.prefab = prefab;
-            this.filled = filled;
+            this.content = content;
+            this.hotkey = hotkey;
         }
 
-        public void MarkAsFilled()
-        {
-            filled = true;
-        }
     }
 
     private class Item
     {
-        public int id;
-        public GameObject item;
+        public InventoryItem item;
+        public GameObject icon;
         public int quantity;
-        public Sprite sprite;
 
-        public Item(int id, GameObject item, int quantity, Sprite sprite)
+        public Item(InventoryItem item, GameObject icon, int quantity)
         {
-            this.id = id;
             this.item = item;
+            this.icon = icon;
             this.quantity = quantity;
-            this.sprite = sprite;
         }
     }
 }
