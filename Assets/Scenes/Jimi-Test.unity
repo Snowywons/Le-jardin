@@ -458,6 +458,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &95764968
 GameObject:
@@ -720,6 +722,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &124377863
 GameObject:
@@ -861,6 +865,8 @@ MonoBehaviour:
   isWet: 1
   plante: {fileID: 11400000, guid: 807530f6bcb1dd149ae913986e249115, type: 2}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 1
 --- !u!1 &213219255
 GameObject:
@@ -990,6 +996,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &216268304
 GameObject:
@@ -1519,6 +1527,8 @@ MonoBehaviour:
   isWet: 1
   plante: {fileID: 11400000, guid: 807530f6bcb1dd149ae913986e249115, type: 2}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 1
 --- !u!1 &590321963
 GameObject:
@@ -1781,6 +1791,8 @@ MonoBehaviour:
   isWet: 1
   plante: {fileID: 11400000, guid: 315c4d6d38df75a489a4062f99115f03, type: 2}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 1
 --- !u!1 &646212292
 GameObject:
@@ -1910,6 +1922,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &705507993
 GameObject:
@@ -2132,6 +2146,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &727718300
 GameObject:
@@ -2480,6 +2496,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1001 &858850218
 PrefabInstance:
@@ -2695,7 +2713,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 908792775}
+        m_TargetAssemblyTypeName: TileComponent, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &908792775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2709,8 +2739,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isWet: 0
-  plante: {fileID: 0}
+  plante: {fileID: 11400000, guid: 315c4d6d38df75a489a4062f99115f03, type: 2}
   age: 0
+  wetMaterial: {fileID: 2100000, guid: e02a5386816678f4bade47633fa8fc51, type: 2}
+  dryMaterial: {fileID: 2100000, guid: 32599c0090cf707408dcd946bb9ce1de, type: 2}
   instantGrow: 0
 --- !u!1001 &950861191
 PrefabInstance:
@@ -3260,6 +3292,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1106416330
 GameObject:
@@ -3389,6 +3423,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1121540893
 GameObject:
@@ -3518,6 +3554,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1159458637
 GameObject:
@@ -3647,6 +3685,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1164254460
 GameObject:
@@ -3884,6 +3924,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1237246163
 GameObject:
@@ -4220,6 +4262,8 @@ MonoBehaviour:
   isWet: 1
   plante: {fileID: 11400000, guid: 807530f6bcb1dd149ae913986e249115, type: 2}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 1
 --- !u!1 &1328929546
 GameObject:
@@ -4349,6 +4393,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1361910971
 GameObject:
@@ -4766,6 +4812,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1550693464
 GameObject:
@@ -5145,6 +5193,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1684025762
 GameObject:
@@ -5274,6 +5324,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1703647472
 GameObject:
@@ -5781,6 +5833,8 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0
 --- !u!1 &1918646429
 GameObject:
@@ -5895,6 +5949,8 @@ MonoBehaviour:
   isWet: 1
   plante: {fileID: 11400000, guid: 315c4d6d38df75a489a4062f99115f03, type: 2}
   age: 0
+  wetMaterial: {fileID: 2100000, guid: e02a5386816678f4bade47633fa8fc51, type: 2}
+  dryMaterial: {fileID: 2100000, guid: 32599c0090cf707408dcd946bb9ce1de, type: 2}
   instantGrow: 1
 --- !u!114 &1918646435
 MonoBehaviour:
@@ -6106,6 +6162,8 @@ MonoBehaviour:
   isWet: 1
   plante: {fileID: 11400000, guid: 315c4d6d38df75a489a4062f99115f03, type: 2}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 1
 --- !u!1 &2029190878
 GameObject:
@@ -6235,4 +6293,6 @@ MonoBehaviour:
   isWet: 0
   plante: {fileID: 0}
   age: 0
+  wetMaterial: {fileID: 0}
+  dryMaterial: {fileID: 0}
   instantGrow: 0

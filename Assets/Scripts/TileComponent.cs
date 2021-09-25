@@ -65,6 +65,7 @@ public class TileComponent : MonoBehaviour
     private void TileReset()
     {
         age = 0;
+        plante = null;
 
         // Security check
         if (planteMature)
