@@ -48,17 +48,20 @@ public class TileComponent : MonoBehaviour
         }
     }
 
+    public void SetWet()
+    {
+        isWet = true;
+        GetComponent<MeshRenderer>().material = wetMaterial;
+    }
+
     public void OnInteract()
     {
-        
-        if(plante != null && age >= plante.maturingTime)
+        var inventaire = FindObjectOfType<InventoryComponent>();
+
+        var selection = inventaire.GetSelected();
+        if (selection is IUsable usable)
         {
-            Harvest();
-        }
-        else
-        {
-            isWet = true;
-            GetComponent<MeshRenderer>().material = wetMaterial;
+            usable.Use(this);
         }
     }
 

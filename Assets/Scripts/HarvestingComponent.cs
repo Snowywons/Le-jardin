@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class WateringComponent : MonoBehaviour, IUsable
+public class HarvestingComponent : MonoBehaviour, IUsable
 {
-    public string ID => "tool_watering";
-    public string Name => "Watering Can";
+    public string ID => "tool_harvesting";
+    public string Name => "Scythe";
 
     Sprite InventoryItem.Sprite => Sprite;
 
@@ -14,6 +14,6 @@ public class WateringComponent : MonoBehaviour, IUsable
 
     public void Use(TileComponent tile)
     {
-        tile.SetWet();
+        tile.Harvest();
     }
 }
