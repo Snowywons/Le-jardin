@@ -64,6 +64,8 @@ public class TileComponent : MonoBehaviour
         if (selection is IUsable usable)
         {
             usable.Use(this);
+            if (usable.Consumable)
+                inventaire.Remove(selection);
         }
     }
 

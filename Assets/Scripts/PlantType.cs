@@ -19,4 +19,7 @@ public class PlantType : ScriptableObject, InventoryItem
     string InventoryItem.ID => ID;
     string InventoryItem.Name => Name;
     Sprite InventoryItem.Sprite => Sprite;
+    bool InventoryItem.Consumable => true;
+
+   
 }

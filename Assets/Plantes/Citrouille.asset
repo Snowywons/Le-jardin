@@ -15,7 +15,9 @@ MonoBehaviour:
   ID: plant_citrouille
   Name: Citrouille
   Sprite: {fileID: 21300000, guid: f392cc6101764844e9af29475a1026f2, type: 3}
+  seedSprite: {fileID: 21300000, guid: 6591541073a28fd4fa92be1a7a732055, type: 3}
   Price: 0
   maturingTime: 2
-  young: {fileID: 6138045074968672255, guid: 6e8167badc38ef243b362f8eab15c7b2, type: 3}
+  young: {fileID: 6619077301139490207, guid: cc6b0705c18c96f498a2bb0627b03d46, type: 3}
   mature: {fileID: 1674102243442382005, guid: 7159618e80ecd0441b2c8cf93ea05d5c, type: 3}
+  seed: {fileID: 2801427861298220674, guid: 39c746d0c5b55e1479d1b38eeba76098, type: 3}
