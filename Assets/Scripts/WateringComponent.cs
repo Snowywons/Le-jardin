@@ -7,6 +7,7 @@ public class WateringComponent : MonoBehaviour, IUsable
 {
     public string ID => "tool_watering";
     public string Name => "Watering Can";
+    public bool Consumable => false;
 
     Sprite InventoryItem.Sprite => Sprite;
 

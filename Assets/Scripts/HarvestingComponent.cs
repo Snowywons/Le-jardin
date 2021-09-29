@@ -7,6 +7,7 @@ public class HarvestingComponent : MonoBehaviour, IUsable
 {
     public string ID => "tool_harvesting";
     public string Name => "Scythe";
+    public bool Consumable => false;
 
     Sprite InventoryItem.Sprite => Sprite;
 

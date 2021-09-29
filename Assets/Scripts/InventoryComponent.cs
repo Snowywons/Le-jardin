@@ -9,18 +9,17 @@ public class InventoryComponent : MonoBehaviour
     private const int MAX_CAPACITY = 8;
 
     [SerializeField] GameObject content;
-    [SerializeField] GameObject slotPrefab;
-    [SerializeField] GameObject itemPrefab;
+    [SerializeField] InventorySlot slotPrefab;
 
 
-    private static List<Slot> slots;
+    private List<Slot> slots;
     private Slot selected;
+    public List<PlantType> plantes = new List<PlantType>();
 
     private void Start()
     {
+        
         slots = new List<Slot>();
-
-        DeleteExistingSlots();
 
         for (int i = 0; i < Capacity; i++)
         {
@@ -28,6 +27,11 @@ public class InventoryComponent : MonoBehaviour
         }
         Add(FindObjectOfType<WateringComponent>());
         Add(FindObjectOfType<HarvestingComponent>());
+        foreach (PlantType plante in plantes)
+        {
+            Add(new Seed(plante));
+        }
+
     }
     private void Update()
     {
@@ -75,10 +79,36 @@ public class InventoryComponent : MonoBehaviour
         }
 
         // Update quantity or create a new one
-        if (ItemExists(item, out Item itemFound))
-            itemFound.icon.GetComponentInChildren<Text>().text = $"{itemFound.quantity  + quantity}";
+        var slot = FindSlot(item);
+        if (slot != null)
+        {
+            slot.content.quantity += quantity;
+            if (slot.content.item.Consumable)
+                slot.prefab.quantity.text = $"{slot.content.quantity}";
+            else
+                slot.prefab.quantity.text = "";
+        }
         else if (!IsFull())
             CreateNewItem(item, quantity);
+    }
+    public void Remove(InventoryItem item)
+    {
+        var slot = FindSlot(item);
+        if(slot != null)
+        {
+            slot.content.quantity--;
+            if(slot.content.quantity == 0)
+            {
+                slot.prefab.icon.sprite = null;
+                slot.prefab.quantity.text = "";
+                slot.content = null;
+            }
+            else if(item.Consumable)
+            {
+                slot.prefab.quantity.text = $"{slot.content.quantity}";
+            }
+        }
+       
     }
 
     private void CreateNewItem(InventoryItem item, int quantity)
@@ -86,11 +116,13 @@ public class InventoryComponent : MonoBehaviour
         Slot emptySlot = GetEmptySlot();
         if (emptySlot == null) return;
 
-        GameObject newItem = Instantiate(itemPrefab, emptySlot.prefab.transform);
-        newItem.GetComponent<Image>().sprite = item.Sprite;
-        newItem.GetComponentInChildren<Text>().text = $"{quantity}";
+        if (item.Consumable)
+            emptySlot.prefab.quantity.text = $"{quantity}";
+        else
+            emptySlot.prefab.quantity.text = "";
 
-        emptySlot.content = new Item(item, newItem, quantity);
+        emptySlot.prefab.icon.sprite = item.Sprite;
+        emptySlot.content = new Item(item, quantity);
 
     }
 
@@ -101,25 +133,26 @@ public class InventoryComponent : MonoBehaviour
 
     private void CreateNewSlot()
     {
-        GameObject slot = Instantiate(slotPrefab, content.transform);
+        var slot = Instantiate(slotPrefab, content.transform);
         slot.name = $"Slot [{slots.Count}]";
-        slot.GetComponentInChildren<Text>().text = $"{slots.Count + 1}";
+        slot.index.text = $"{slots.Count + 1}";
         slots.Add(new Slot(slot, null, (KeyCode)((int)KeyCode.Alpha1+slots.Count)));
     }
 
-
     private bool ItemExists(InventoryItem item, out Item itemFound)
     {
-        foreach(Slot slot in slots)
+        var slot = FindSlot(item);
+        if(slot != null)
         {
-            if(slot.content != null && slot.content.item.ID == item.ID)
-            {
-                itemFound = slot.content;
-                return true;
-            }
+            itemFound = slot.content;
+            return true;
         }
         itemFound = null;
         return false;
+    }
+    private Slot FindSlot(InventoryItem item)
+    {
+        return slots.FirstOrDefault(x => x.content?.item.ID == item.ID);
     }
 
     public void Expand()
@@ -139,11 +172,11 @@ public class InventoryComponent : MonoBehaviour
 
     private class Slot
     {
-        public GameObject prefab;
+        public InventorySlot prefab;
         public Item content;
         public KeyCode hotkey;
 
-        public Slot(GameObject prefab, Item content, KeyCode hotkey)
+        public Slot(InventorySlot prefab, Item content, KeyCode hotkey)
         {
             this.prefab = prefab;
             this.content = content;
@@ -155,13 +188,11 @@ public class InventoryComponent : MonoBehaviour
     private class Item
     {
         public InventoryItem item;
-        public GameObject icon;
         public int quantity;
 
-        public Item(InventoryItem item, GameObject icon, int quantity)
+        public Item(InventoryItem item, int quantity)
         {
             this.item = item;
-            this.icon = icon;
             this.quantity = quantity;
         }
     }

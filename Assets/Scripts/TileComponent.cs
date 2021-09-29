@@ -11,7 +11,8 @@ public class TileComponent : MonoBehaviour
     public Material wetMaterial;
     public Material dryMaterial;
 
-    private Transform planteMature;
+    private Transform modele;
+
     public bool instantGrow; // For Debug Only
 
     private void Start()
@@ -25,6 +26,7 @@ public class TileComponent : MonoBehaviour
 
     public void Plant(PlantType type)
     {
+        SetModel(type.seed);
         plante = type;
         age = 0;
     }
@@ -62,17 +64,26 @@ public class TileComponent : MonoBehaviour
         if (selection is IUsable usable)
         {
             usable.Use(this);
+            if (usable.Consumable)
+                inventaire.Remove(selection);
         }
     }
 
     private void TileReset()
     {
         age = 0;
-        plante = null;
+        Destroy(modele.gameObject);
+    }
+    private void SetModel(Transform nouveau)
+    {
+        if (modele != null)
+        {
+            Destroy(modele.gameObject);
+        }
+        modele = Instantiate(nouveau);
+        modele.position = new Vector3(0, 0.5f, 0);
+        modele.SetParent(transform, false);
 
-        // Security check
-        if (planteMature)
-            Destroy(planteMature.gameObject);
     }
 
     public void OnDayAdvance()
@@ -87,16 +98,20 @@ public class TileComponent : MonoBehaviour
             if (plante != null)
             {
                 age++;
-                if (age == plante.maturingTime)
+        
+                if (age == 1)
                 {
-                    planteMature = Instantiate(plante.mature);
-                    planteMature.position = new Vector3(0, 0.5f, 0);
-                    planteMature.SetParent(transform, false);
+                    SetModel(plante.young);
+                }
+                else if (age == plante.maturingTime)
+                {
+                    SetModel(plante.mature);
                 }
             }
         }
 
     }
+
 
     public void Update()
     {
