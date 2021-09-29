@@ -695,7 +695,7 @@ GameObject:
   - component: {fileID: 341166797}
   - component: {fileID: 341166798}
   m_Layer: 0
-  m_Name: Scythe
+  m_Name: Shovel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
