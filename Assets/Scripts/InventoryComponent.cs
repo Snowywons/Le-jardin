@@ -25,8 +25,9 @@ public class InventoryComponent : MonoBehaviour
         {
             CreateNewSlot();
         }
-        Add(FindObjectOfType<WateringComponent>());
-        Add(FindObjectOfType<HarvestingComponent>());
+
+        Add(FindObjectOfType<WateringComponent>(), 1, false);
+        Add(FindObjectOfType<HarvestingComponent>(), 1, false);
         foreach (PlantType plante in plantes)
         {
             Add(new Seed(plante));
@@ -69,7 +70,7 @@ public class InventoryComponent : MonoBehaviour
         content.transform.Clear();
     }
 
-    public void Add(InventoryItem item, int quantity = 1)
+    public void Add(InventoryItem item, int quantity = 1, bool outline = true)
     {
         // Security check
         if (item == null)
@@ -89,7 +90,7 @@ public class InventoryComponent : MonoBehaviour
                 slot.prefab.quantity.text = "";
         }
         else if (!IsFull())
-            CreateNewItem(item, quantity);
+            CreateNewItem(item, quantity, outline);
     }
     public void Remove(InventoryItem item)
     {
@@ -111,7 +112,7 @@ public class InventoryComponent : MonoBehaviour
        
     }
 
-    private void CreateNewItem(InventoryItem item, int quantity)
+    private void CreateNewItem(InventoryItem item, int quantity, bool outline)
     {
         Slot emptySlot = GetEmptySlot();
         if (emptySlot == null) return;
@@ -123,6 +124,7 @@ public class InventoryComponent : MonoBehaviour
 
         emptySlot.prefab.icon.sprite = item.Sprite;
         emptySlot.content = new Item(item, quantity);
+        emptySlot.prefab.outline.enabled = outline;
 
     }
 
