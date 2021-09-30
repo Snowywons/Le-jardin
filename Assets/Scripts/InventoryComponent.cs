@@ -106,6 +106,7 @@ public class InventoryComponent : MonoBehaviour
             if(slot.content.quantity == 0)
             {
                 slot.prefab.icon.sprite = null;
+                slot.prefab.icon.enabled = false;
                 slot.prefab.quantity.text = "";
                 slot.content = null;
             }
@@ -128,6 +129,7 @@ public class InventoryComponent : MonoBehaviour
             emptySlot.prefab.quantity.text = "";
 
         emptySlot.prefab.icon.sprite = item.Sprite;
+        emptySlot.prefab.icon.enabled = true;
         emptySlot.content = new Item(item, quantity);
         emptySlot.prefab.outline.enabled = outline;
 
@@ -143,6 +145,7 @@ public class InventoryComponent : MonoBehaviour
         var slot = Instantiate(slotPrefab, content.transform);
         slot.name = $"Slot [{slots.Count}]";
         slot.index.text = $"{slots.Count + 1}";
+        slot.icon.enabled = false;
         slots.Add(new Slot(slot, null, (KeyCode)((int)KeyCode.Alpha1+slots.Count)));
     }
 
