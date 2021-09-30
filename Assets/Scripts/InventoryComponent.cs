@@ -30,6 +30,7 @@ public class InventoryComponent : MonoBehaviour
         foreach (PlantType plante in plantes)
         {
             Add(new Seed(plante));
+            Add(new Seed(plante));
         }
 
     }
@@ -69,13 +70,12 @@ public class InventoryComponent : MonoBehaviour
         content.transform.Clear();
     }
 
-    public void Add(InventoryItem item, int quantity = 1)
+    public bool Add(InventoryItem item, int quantity = 1)
     {
         // Security check
         if (item == null)
         {
-            Debug.Log("Error: Can't add to inventory. No item found");
-            return;
+            return true;
         }
 
         // Update quantity or create a new one
@@ -87,9 +87,14 @@ public class InventoryComponent : MonoBehaviour
                 slot.prefab.quantity.text = $"{slot.content.quantity}";
             else
                 slot.prefab.quantity.text = "";
+            return true;
         }
         else if (!IsFull())
+        {
             CreateNewItem(item, quantity);
+            return true;
+        }
+        return false;
     }
     public void Remove(InventoryItem item)
     {

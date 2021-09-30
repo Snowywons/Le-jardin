@@ -39,14 +39,24 @@ public class TileComponent : MonoBehaviour
             return;
         }
 
-        if (!GameSystem.Instance.Inventory.IsFull())
+        InventoryItem item = null;
+        if (age == plante.maturingTime)
         {
-            GameSystem.Instance.Inventory.Add(plante);
+            item = plante;
+        }
+        else if(age > plante.maturingTime)
+        {
+            item = new Seed(plante);
+        }
+        if (GameSystem.Instance.Inventory.Add(item))
+        {
             TileReset();
         }
+
         else
         {
             // TO DO : Informer le joueur que son inventaire est plein.
+            Debug.Log("Inventaire plein.");
         }
     }
 
@@ -118,7 +128,6 @@ public class TileComponent : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             OnDayAdvance();
-        }
-        
+        }        
     }
 }
