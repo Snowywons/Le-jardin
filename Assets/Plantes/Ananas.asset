@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e018c0da3e6aacf4b8a85f5f587168e3, type: 3}
-  m_Name: "Past\xE8que"
+  m_Name: Ananas
   m_EditorClassIdentifier: 
-  ID: plant_pasteque
-  Name: "Past\xE8que"
-  Sprite: {fileID: 21300000, guid: 5c466d2c9f097de4cabaffda23fbc8a7, type: 3}
-  seedSprite: {fileID: 21300000, guid: 7d0b8cfe39f372f4d9b6273e5e4a58dd, type: 3}
+  ID: plant_ananas
+  Name: Ananas
+  Sprite: {fileID: 21300000, guid: 0ed189f874159954a927aed3d93722de, type: 3}
+  seedSprite: {fileID: 21300000, guid: 084caaa850eff954bb0037f3b56fc313, type: 3}
   Price: 0
   maturingTime: 2
   young: {fileID: 6138045074968672255, guid: 6e8167badc38ef243b362f8eab15c7b2, type: 3}
-  mature: {fileID: 5363614223533359784, guid: d1584473e87237e43824974291e5c340, type: 3}
+  mature: {fileID: 6966600150289869000, guid: 0e8cee751e5976649bdb41f2bb531ec9, type: 3}
   seed: {fileID: 2801427861298220674, guid: 39c746d0c5b55e1479d1b38eeba76098, type: 3}

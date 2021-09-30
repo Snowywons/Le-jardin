@@ -6,4 +6,5 @@ public class InventorySlot : MonoBehaviour
     public Text index;
     public Text quantity;
     public Image icon;
+    public Outline outline;
 }
