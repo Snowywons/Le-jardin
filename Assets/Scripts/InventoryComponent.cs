@@ -31,6 +31,7 @@ public class InventoryComponent : MonoBehaviour
         foreach (PlantType plante in plantes)
         {
             Add(new Seed(plante));
+            Add(new Seed(plante));
         }
 
     }
@@ -70,13 +71,12 @@ public class InventoryComponent : MonoBehaviour
         content.transform.Clear();
     }
 
-    public void Add(InventoryItem item, int quantity = 1, bool outline = true)
+    public bool Add(InventoryItem item, int quantity = 1, bool outline = true)
     {
         // Security check
         if (item == null)
         {
-            Debug.Log("Error: Can't add to inventory. No item found");
-            return;
+            return true;
         }
 
         // Update quantity or create a new one
@@ -88,9 +88,14 @@ public class InventoryComponent : MonoBehaviour
                 slot.prefab.quantity.text = $"{slot.content.quantity}";
             else
                 slot.prefab.quantity.text = "";
+            return true;
         }
         else if (!IsFull())
+        {
             CreateNewItem(item, quantity, outline);
+            return true;
+        }
+        return false;
     }
     public void Remove(InventoryItem item)
     {
@@ -101,6 +106,7 @@ public class InventoryComponent : MonoBehaviour
             if(slot.content.quantity == 0)
             {
                 slot.prefab.icon.sprite = null;
+                slot.prefab.icon.enabled = false;
                 slot.prefab.quantity.text = "";
                 slot.content = null;
             }
@@ -123,6 +129,7 @@ public class InventoryComponent : MonoBehaviour
             emptySlot.prefab.quantity.text = "";
 
         emptySlot.prefab.icon.sprite = item.Sprite;
+        emptySlot.prefab.icon.enabled = true;
         emptySlot.content = new Item(item, quantity);
         emptySlot.prefab.outline.enabled = outline;
 
@@ -138,6 +145,7 @@ public class InventoryComponent : MonoBehaviour
         var slot = Instantiate(slotPrefab, content.transform);
         slot.name = $"Slot [{slots.Count}]";
         slot.index.text = $"{slots.Count + 1}";
+        slot.icon.enabled = false;
         slots.Add(new Slot(slot, null, (KeyCode)((int)KeyCode.Alpha1+slots.Count)));
     }
 

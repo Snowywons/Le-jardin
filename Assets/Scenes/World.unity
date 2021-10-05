@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7861,12 +7861,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b054ea7b8163b459507471dee858cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Capacity>k__BackingField: 4
+  <Capacity>k__BackingField: 8
   content: {fileID: 1792278002}
   slotPrefab: {fileID: 5500306664040130188, guid: 61959cbf13ab37f489a19ff1d262a572, type: 3}
   plantes:
   - {fileID: 11400000, guid: 315c4d6d38df75a489a4062f99115f03, type: 2}
   - {fileID: 11400000, guid: 807530f6bcb1dd149ae913986e249115, type: 2}
+  - {fileID: 11400000, guid: ec7d464ee11f0884a8aba141165e328f, type: 2}
+  - {fileID: 11400000, guid: b93a23e98cc2791478211c8d4b205fec, type: 2}
+  - {fileID: 11400000, guid: 68843d303183a0f4085a9c2067f682e8, type: 2}
 --- !u!114 &1035491036
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,8 +13,8 @@ public class HarvestingComponent : MonoBehaviour, IUsable
 
     public Sprite Sprite;
 
-    public void Use(TileComponent tile)
+    public bool Use(TileComponent tile)
     {
-        tile.Harvest();
+        return tile.Harvest();
     }
 }

@@ -20,6 +20,5 @@ public class PlantType : ScriptableObject, InventoryItem
     string InventoryItem.Name => Name;
     Sprite InventoryItem.Sprite => Sprite;
     bool InventoryItem.Consumable => true;
-
    
 }

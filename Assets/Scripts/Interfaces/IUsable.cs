@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IUsable : InventoryItem
 {
-    public void Use(TileComponent tile);
+    public bool Use(TileComponent tile);
 }

@@ -12,9 +12,9 @@ public class Seed : IUsable
     string InventoryItem.Name => _typePlante.name;
     Sprite InventoryItem.Sprite => _typePlante.seedSprite;
 
-    public void Use(TileComponent tile)
+    public bool Use(TileComponent tile)
     {
-        tile.Plant(_typePlante);
+        return tile.Plant(_typePlante);
     }
 
     public Seed(PlantType typePlante)
