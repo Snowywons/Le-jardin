@@ -13,8 +13,9 @@ public class WateringComponent : MonoBehaviour, IUsable
 
     public Sprite Sprite;
 
-    public void Use(TileComponent tile)
+    public bool Use(TileComponent tile)
     {
         tile.SetWet();
+        return true;
     }
 }
