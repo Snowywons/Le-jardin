@@ -34,6 +34,7 @@ public class InventoryComponent : MonoBehaviour
             Add(new Seed(plante));
         }
 
+        SlotSelect();
     }
     private void Update()
     {
@@ -41,11 +42,27 @@ public class InventoryComponent : MonoBehaviour
         {
             if (Input.GetKeyDown(slot.hotkey))
             {
-                selected = slot;
+                SlotSelect(slot);
                 Debug.Log(slot.hotkey);
                 break;
             }
         }
+    }
+
+    private void SlotSelect(Slot slot = null)
+    {
+        if (slot == null)
+        {
+            selected = slots.FirstOrDefault();
+            selected.prefab.border.gameObject.SetActive(true);
+            return;
+        }
+
+        if (selected != null)
+            selected.prefab.border.gameObject.SetActive(false);
+
+        selected = slot;
+        selected.prefab.border.gameObject.SetActive(true);
     }
 
     public InventoryItem GetSelected()
@@ -132,7 +149,6 @@ public class InventoryComponent : MonoBehaviour
         emptySlot.prefab.icon.enabled = true;
         emptySlot.content = new Item(item, quantity);
         emptySlot.prefab.outline.enabled = outline;
-
     }
 
     private Slot GetEmptySlot()
@@ -146,6 +162,7 @@ public class InventoryComponent : MonoBehaviour
         slot.name = $"Slot [{slots.Count}]";
         slot.index.text = $"{slots.Count + 1}";
         slot.icon.enabled = false;
+        slot.border.gameObject.SetActive(false);
         slots.Add(new Slot(slot, null, (KeyCode)((int)KeyCode.Alpha1+slots.Count)));
     }
 
