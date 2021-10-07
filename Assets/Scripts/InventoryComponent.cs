@@ -6,7 +6,7 @@ using System.Linq;
 public class InventoryComponent : MonoBehaviour
 {
     [field: SerializeField] public int Capacity { get; private set; }
-    private const int MAX_CAPACITY = 8;
+    private const int MAX_CAPACITY = 9;
 
     [SerializeField] GameObject content;
     [SerializeField] InventorySlot slotPrefab;

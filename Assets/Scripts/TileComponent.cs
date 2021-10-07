@@ -10,6 +10,7 @@ public class TileComponent : MonoBehaviour
     public int age;
     public Material wetMaterial;
     private Material dryMaterial;
+    [SerializeField] GameObject outline;
 
     private Transform modele;
 
@@ -17,6 +18,8 @@ public class TileComponent : MonoBehaviour
 
     private void Start()
     {
+        outline.gameObject.SetActive(false);
+
         dryMaterial = GetComponent<MeshRenderer>().material;
         if (instantGrow)
         {
@@ -137,5 +140,14 @@ public class TileComponent : MonoBehaviour
         {
             OnDayAdvance();
         }        
+    }
+
+    void OnMouseEnter()
+    {
+        outline.gameObject.SetActive(true);
+    }
+    void OnMouseExit()
+    {
+        outline.gameObject.SetActive(false);
     }
 }
