@@ -11,23 +11,53 @@ public class ClockComponent : MonoBehaviour
 
     [SerializeField] Text timeText;
     [SerializeField] Text dayText;
+    [SerializeField] Image arrowIndicator;
 
     [SerializeField] GameObject pauseText;
 
+    private float currentDayTime;
+    private float val;
     private void Update()
     {
-        time += Time.deltaTime * factor;
+        val = Time.deltaTime * factor * 50;
+        currentDayTime += val;
+        time += val;
 
         UpdateTimeText();
+        UpdateArrowIndicator();
 
-        if (!pauseText)
-            Debug.Log("no there anymore!");
+        if (currentDayTime >= 600)
+            NextDay();
     }
 
     private void UpdateTimeText()
     {
+        timeText.text = "";
+        int hours = ((int)currentDayTime / (duration / 10)) % 12 + 9;
+        int minutes = (int)currentDayTime % (duration / 10);
+
         if (timeText)
-            timeText.text = $"{((int)time / (duration / 10)) % 10} : {(int)time % (duration / 10)}";
+        {
+            timeText.text = $"{hours}:";
+
+            if (minutes < 10)
+            {
+                timeText.text += $"0{minutes}";
+            }
+            else
+            {
+                timeText.text += $"{minutes}";
+            }
+
+            if (hours < 12)
+            {
+                timeText.text += " am";
+            }
+            else
+            {
+                timeText.text += " pm";
+            }
+        }
     }
 
     private void UpdateDayText()
@@ -36,6 +66,15 @@ public class ClockComponent : MonoBehaviour
 
         if (dayText)
             dayText.text = $"Jour {GetDay()}";
+    }
+
+    private void UpdateArrowIndicator()
+    {
+        if (arrowIndicator)
+        {
+            Vector3 angle = new Vector3(0, 0, 90 - (currentDayTime % 600) * 180 / 600);
+            arrowIndicator.transform.rotation = Quaternion.Euler(angle);
+        }
     }
 
     public void Pause()
@@ -53,6 +92,7 @@ public class ClockComponent : MonoBehaviour
     public void NextDay()
     {
         time = (((int)time / duration) + 1) * duration;
+        currentDayTime = 0;
 
         UpdateDayText();
     }
