@@ -1,15 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum GameState
+{
+    Resume,
+    Pause
+}
 
 public class GameSystem : MonoBehaviour
 {
     public static GameSystem Instance { get; private set; }
     public InventoryComponent Inventory { get; private set; }
     public ClockComponent Clock { get; private set; }
+    public GameState State { get; private set; }
 
     [SerializeField] InventoryComponent inventory;
     [SerializeField] ClockComponent clock;
+
+    [SerializeField] GameObject pausePanel;
 
     private void Awake()
     {
@@ -21,10 +28,27 @@ public class GameSystem : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Update()
     {
-        if (!Instance) Debug.Log("Pas d'instance");
-        if (!Inventory) Debug.Log("Pas d'inventaire");
-        if (!Clock) Debug.Log("Pas de clock");
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+    }
+
+    private void TogglePause()
+    {
+        if (State.Equals(GameState.Resume))
+        {
+            Clock.TogglePause();
+            pausePanel.SetActive(true);
+            State = GameState.Pause;
+        }
+        else
+        {
+            Clock.TogglePause();
+            pausePanel.SetActive(false);
+            State = GameState.Resume;
+        }
     }
 }
