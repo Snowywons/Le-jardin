@@ -1,58 +1,103 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+enum Days
+{
+    Dimanche,
+    Lundi,
+    Mardi,
+    Mercredi,
+    Jeudi,
+    Vendredi,
+    Samedi
+}
+
 public class ClockComponent : MonoBehaviour
 {
-    private float time;
-    private int duration = 600; //600 secondes == 1 day || 10 minutes == 1 day
-    private float factor = 1f;
+    [SerializeField] [Range(0, 24)] int dayStartAt;
+    [SerializeField] [Range(0, 24)] int dayEndAt;
+    [SerializeField] float daySpeed = 1f;
 
     [SerializeField] Text timeText;
     [SerializeField] Text dayText;
+    [SerializeField] Image arrowIndicator;
 
-    [SerializeField] GameObject pauseText;
+    private int duration;
+    private float time;
+    private float currentDayTime;
+
+    private bool isPaused;
+
+    private void Start()
+    {
+        duration = (dayEndAt - dayStartAt) * (60 * 60);
+        UpdateDayText();
+    }
 
     private void Update()
     {
-        time += Time.deltaTime * factor;
+        if (!isPaused)
+        {
+            float t = daySpeed * Time.deltaTime;
+            currentDayTime += t;
+            time += t;
+        }
 
         UpdateTimeText();
+        UpdateArrowIndicator();
 
-        if (!pauseText)
-            Debug.Log("no there anymore!");
+        if (currentDayTime >= duration)
+            NextDay();
     }
 
     private void UpdateTimeText()
     {
-        if (timeText)
-            timeText.text = $"{((int)time / (duration / 10)) % 10} : {(int)time % (duration / 10)}";
+        int hours = (int)currentDayTime / (60 * 60) + dayStartAt;
+        int minutes = ((int)currentDayTime / 60) % 60;
+
+        timeText.text = $"{hours}:";
+
+        if (minutes < 10)
+        {
+            timeText.text += $"0{minutes}";
+        }
+        else
+        {
+            timeText.text += $"{minutes}";
+        }
+
+        if (hours < 12)
+        {
+            timeText.text += " am";
+        }
+        else
+        {
+            timeText.text += " pm";
+        }
     }
 
     private void UpdateDayText()
     {
-        // TO DO : Un système de calendrier à la place
-
-        if (dayText)
-            dayText.text = $"Jour {GetDay()}";
+        int day = GetDay();
+        dayText.text = $"{Enum.GetName(typeof(Days), day % 7).Substring(0, 3)}. {day}";
     }
 
-    public void Pause()
+    private void UpdateArrowIndicator()
     {
-        factor = 0f;
-        pauseText.SetActive(true);
+        Vector3 angle = new Vector3(0, 0, 90 - (currentDayTime % duration) * 180 / duration);
+        arrowIndicator.transform.rotation = Quaternion.Euler(angle);
     }
 
-    public void Resume()
+    public void TogglePause()
     {
-        factor = 1f;
-        pauseText.SetActive(false);
+        isPaused = !isPaused;
     }
 
     public void NextDay()
     {
-        time = (((int)time / duration) + 1) * duration;
+        time = ((int)time / duration) * duration;
+        currentDayTime = 0;
 
         UpdateDayText();
     }

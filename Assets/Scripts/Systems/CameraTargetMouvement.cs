@@ -9,9 +9,11 @@ public enum MouseButton
 
 public class CameraTargetMouvement : MonoBehaviour
 {
+    [SerializeField] Camera cam;
     [SerializeField] MouseButton button;
     [SerializeField] float speed = 10f;
     public float radius = 2f;
+
     private Vector3 targetPos;
     private Vector3 initPos;
     private bool isMoving;
@@ -19,7 +21,7 @@ public class CameraTargetMouvement : MonoBehaviour
     private void SetTargetPosition()
     {
         Plane plane = new Plane(Vector3.up, transform.position);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
         if (plane.Raycast(ray, out float point))
             targetPos = ray.GetPoint(point);
@@ -39,6 +41,9 @@ public class CameraTargetMouvement : MonoBehaviour
 
     private void Start()
     {
+        if (cam == null)
+            cam = Camera.main;
+
         initPos = transform.position;
     }
 

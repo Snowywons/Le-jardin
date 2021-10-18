@@ -4,13 +4,32 @@ using UnityEngine;
 
 public class WarehouseComponent : MonoBehaviour
 {
+    [SerializeField] GameObject outline;
+
+    private void Start()
+    {
+        if (outline)
+            outline.gameObject.SetActive(false);
+    }
+
+    void OnMouseEnter()
+    {
+        if (outline)
+            outline.gameObject.SetActive(true);
+    }
+    void OnMouseExit()
+    {
+        if (outline)
+            outline.gameObject.SetActive(false);
+    }
+
     public void Enter()
     {
-        GameSystem.Instance.Clock.Pause();
+        GameSystem.Instance.Clock.TogglePause();
     }
 
     public void Exit()
     {
-        GameSystem.Instance.Clock.Resume();
+        GameSystem.Instance.Clock.TogglePause();
     }
 }

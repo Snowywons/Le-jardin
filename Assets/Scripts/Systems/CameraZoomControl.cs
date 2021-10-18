@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraZoomControl : MonoBehaviour
 {
+    [SerializeField] Camera cam;
     [SerializeField] float speed = 10f;
-    [SerializeField] Camera camera;
     [SerializeField] float maxZoomIn;
     [SerializeField] float maxZoomOut;
     [SerializeField] CameraTargetMouvement target;
@@ -16,8 +14,8 @@ public class CameraZoomControl : MonoBehaviour
 
     void Start()
     {
-        if (camera == null)
-            camera = Camera.main;
+        if (cam == null)
+            cam = Camera.main;
 
         xAdjust = transform.position.x - target.transform.position.x;
         zAdjust = transform.position.z - target.transform.position.z;
@@ -26,13 +24,13 @@ public class CameraZoomControl : MonoBehaviour
 
     void Update()
     {
-        float zoomValue = camera.orthographicSize - Input.GetAxis("Mouse ScrollWheel") * speed;
+        float zoomValue = cam.orthographicSize - Input.GetAxis("Mouse ScrollWheel") * speed;
         target.radius = maxZoomOut / zoomValue * initRadius;
 
         if (zoomValue >= maxZoomIn && zoomValue <= maxZoomOut)
         {
-            camera.orthographicSize = zoomValue;
-            camera.transform.position = 
+            cam.orthographicSize = zoomValue;
+            cam.transform.position = 
                 new Vector3(target.transform.position.x + xAdjust, transform.position.y, target.transform.position.z + zAdjust);
         }
     }
