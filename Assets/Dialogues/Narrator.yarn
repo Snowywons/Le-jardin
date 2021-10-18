@@ -1,0 +1,18 @@
+title: Narrator
+tags:
+---
+<<if $isFirstTime is true>>
+    Narrator:Bienvenue dans ton jardin, jeune pousse! Tu vas voir, il y a plein de belles choses à y planter. 
+    Narrator:
+    <<set $isFirstTime to false>>
+<<endif>>
+Narrator:Commençons la journée!
+
+===
+
+title: Narrator.plant
+
+---
+Narrator:Voici comment faire pour planter une graine. 
+===
+
