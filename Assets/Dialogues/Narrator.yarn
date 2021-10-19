@@ -1,18 +1,27 @@
 title: Narrator
 tags:
 ---
+<<set $nodeName to "Narrateur">>
 <<if $isFirstTime is true>>
-    Narrator:Bienvenue dans ton jardin, jeune pousse! Tu vas voir, il y a plein de belles choses à y planter. 
-    Narrator:
+    Bienvenue dans ton jardin, jeune pousse! Tu vas voir, il y a plein de belles choses à y planter. 
+    Je vais te montrer tout ce qu'il y a à faire dans le coin! 
+    Qu'est-ce que tu veux faire?
+    [[Planter|Narrator.Plant]]
+    [[Arroser|Narrator.Water]]
     <<set $isFirstTime to false>>
 <<endif>>
-Narrator:Commençons la journée!
+    Commençons la journée! Que veux tu faire aujourd'hui? 
 
 ===
 
-title: Narrator.plant
+title: Narrator.Plant
 
 ---
-Narrator:Voici comment faire pour planter une graine. 
+Voici comment faire pour planter une graine. 
+===
+
+title:Narrator.Water
+---
+Voici comment faire pour arroser.
 ===
 
