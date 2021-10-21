@@ -3,6 +3,7 @@ using UnityEngine;
 public class OnClickSystem : MonoBehaviour
 {
     private string cameraName = "Main Camera";
+    public bool enabled = true;
 
     [SerializeField] new Camera camera;
 
@@ -23,7 +24,7 @@ public class OnClickSystem : MonoBehaviour
 
     private void Update()
     {
-        if (camera)
+        if (camera && enabled)
         {
             if (Input.GetMouseButtonDown(0))
             {

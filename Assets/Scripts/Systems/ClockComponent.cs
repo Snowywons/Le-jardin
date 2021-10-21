@@ -89,9 +89,10 @@ public class ClockComponent : MonoBehaviour
         arrowIndicator.transform.rotation = Quaternion.Euler(angle);
     }
 
-    public void TogglePause()
+    public void SetPause(bool pause)
     {
-        isPaused = !isPaused;
+        isPaused = pause;
+
     }
 
     public void NextDay()

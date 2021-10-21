@@ -35,18 +35,18 @@ public class GameSystem : MonoBehaviour
             TogglePause();
         }
     }
-
+    
     private void TogglePause()
     {
         if (State.Equals(GameState.Resume))
         {
-            Clock.TogglePause();
+            Clock.SetPause(true);
             pausePanel.SetActive(true);
             State = GameState.Pause;
         }
         else
         {
-            Clock.TogglePause();
+            Clock.SetPause(false);
             pausePanel.SetActive(false);
             State = GameState.Resume;
         }

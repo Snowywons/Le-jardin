@@ -25,11 +25,11 @@ public class WarehouseComponent : MonoBehaviour
 
     public void Enter()
     {
-        GameSystem.Instance.Clock.TogglePause();
+        GameSystem.Instance.Clock.SetPause(true);
     }
 
     public void Exit()
     {
-        GameSystem.Instance.Clock.TogglePause();
+        GameSystem.Instance.Clock.SetPause(true);
     }
 }
