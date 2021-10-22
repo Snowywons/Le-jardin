@@ -58,28 +58,4 @@ public class GameSystem : MonoBehaviour
             State = GameState.Resume;
         }
     }
-
-    //void OnEnable()
-    //{
-    //    SceneManager.sceneLoaded += OnLevelFinishedLoading;
-    //}
-
-    //void OnDisable()
-    //{
-    //    SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    //}
-
-    //void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    //{
-    //    switch (scene.name)
-    //    {
-    //        case "World":
-    //            PlayerInventory.UpdateUI();
-    //            break;
-
-    //        case "Warehouse":
-    //            WarehouseInventory.UpdateUI();
-    //            break;
-    //    }
-    //}
 }
