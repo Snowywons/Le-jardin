@@ -19,6 +19,8 @@ public class GameSystem : MonoBehaviour
     public GameState State { get; private set; }
 
     [SerializeField] ClockComponent clock;
+    [SerializeField] InventoryComponent playerInventory;
+    [SerializeField] InventoryComponent warehouseInventory;
 
     [SerializeField] GameObject pausePanel;
     [SerializeField] List<PlantType> plants;
@@ -28,8 +30,8 @@ public class GameSystem : MonoBehaviour
         if (!Instance)
         {
             Instance = GetComponent<GameSystem>();
-            PlayerInventory = FindObjectsOfType<InventoryComponent>().Where(i => i.mode.Equals(InventoryMode.Player)).FirstOrDefault();
-            WarehouseInventory = FindObjectsOfType<InventoryComponent>().Where(i => i.mode.Equals(InventoryMode.Warehouse)).FirstOrDefault();
+            PlayerInventory = playerInventory;
+            WarehouseInventory = warehouseInventory;
             Clock = clock;
             Plants = plants;
         }
