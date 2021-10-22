@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3834,7 +3834,6 @@ GameObject:
   - component: {fileID: 564874246}
   - component: {fileID: 564874245}
   - component: {fileID: 564874244}
-  - component: {fileID: 564874243}
   - component: {fileID: 564874242}
   m_Layer: 5
   m_Name: Player GUI
@@ -3879,18 +3878,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraName: Camera GUI
---- !u!114 &564874243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564874240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9c0467e57d5fc1489f34793045d30eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &564874244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6796,7 +6783,7 @@ GameObject:
   - component: {fileID: 950633902}
   - component: {fileID: 950633901}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Day Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7849,6 +7836,7 @@ GameObject:
   - component: {fileID: 1035491037}
   - component: {fileID: 1035491036}
   - component: {fileID: 1035491035}
+  - component: {fileID: 1035491041}
   - component: {fileID: 1035491034}
   - component: {fileID: 1035491033}
   - component: {fileID: 1035491040}
@@ -7872,7 +7860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fadb27b092b4934592f48da68ab81ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  cam: {fileID: 0}
+  cameraName: Main Camera
 --- !u!114 &1035491034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7888,9 +7877,9 @@ MonoBehaviour:
   dayStartAt: 6
   dayEndAt: 19
   daySpeed: 10000
-  timeText: {fileID: 2097846276}
-  dayText: {fileID: 950633901}
-  arrowIndicator: {fileID: 1123623011}
+  timeTextName: Time Text
+  dayTextName: Day Text
+  arrowIndicatorName: Arrow Indicator
 --- !u!114 &1035491035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7903,15 +7892,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b054ea7b8163b459507471dee858cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Capacity>k__BackingField: 8
-  content: {fileID: 1792278002}
-  slotPrefab: {fileID: 5500306664040130188, guid: 61959cbf13ab37f489a19ff1d262a572, type: 3}
-  plantes:
-  - {fileID: 11400000, guid: 315c4d6d38df75a489a4062f99115f03, type: 2}
-  - {fileID: 11400000, guid: 807530f6bcb1dd149ae913986e249115, type: 2}
-  - {fileID: 11400000, guid: ec7d464ee11f0884a8aba141165e328f, type: 2}
-  - {fileID: 11400000, guid: b93a23e98cc2791478211c8d4b205fec, type: 2}
-  - {fileID: 11400000, guid: 68843d303183a0f4085a9c2067f682e8, type: 2}
+  mode: 0
+  hotkey: 1
+  showSlotIndex: 1
+  capacityMin: 6
+  capacityMax: 8
+  canvasContentName: Inventory Content
+  slotPrefab: {fileID: 5235525739402402254, guid: 18662abc96e911b46a4fb48012650c7d, type: 3}
 --- !u!114 &1035491036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7924,9 +7911,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bf81f3fa2fb8140b63c798b0c5187f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 1035491035}
   clock: {fileID: 1035491034}
   pausePanel: {fileID: 1004364882}
+  plants:
+  - {fileID: 11400000, guid: 315c4d6d38df75a489a4062f99115f03, type: 2}
+  - {fileID: 11400000, guid: 807530f6bcb1dd149ae913986e249115, type: 2}
+  - {fileID: 11400000, guid: ec7d464ee11f0884a8aba141165e328f, type: 2}
+  - {fileID: 11400000, guid: b93a23e98cc2791478211c8d4b205fec, type: 2}
+  - {fileID: 11400000, guid: 68843d303183a0f4085a9c2067f682e8, type: 2}
 --- !u!114 &1035491037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7997,6 +7989,25 @@ MonoBehaviour:
   onDialogueComplete:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1035491041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035491032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b054ea7b8163b459507471dee858cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 1
+  hotkey: 0
+  showSlotIndex: 0
+  capacityMin: 20
+  capacityMax: 20
+  canvasContentName: Warehouse Content
+  slotPrefab: {fileID: 5235525739402402254, guid: 18662abc96e911b46a4fb48012650c7d, type: 3}
 --- !u!1001 &1036975814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8568,7 +8579,7 @@ GameObject:
   - component: {fileID: 1123623010}
   - component: {fileID: 1123623011}
   m_Layer: 5
-  m_Name: Arrow
+  m_Name: Arrow Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13490,7 +13501,7 @@ RectTransform:
   m_GameObject: {fileID: 1792278002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 1013217117}
   m_RootOrder: 0
@@ -15796,7 +15807,7 @@ GameObject:
   - component: {fileID: 2097846275}
   - component: {fileID: 2097846276}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Time Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

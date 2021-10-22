@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class TileComponent : MonoBehaviour
 {
     public bool isWet;
@@ -57,7 +56,8 @@ public class TileComponent : MonoBehaviour
         {
             item = new Seed(plante);
         }
-        if (GameSystem.Instance.Inventory.Add(item))
+
+        if (GameSystem.Instance.PlayerInventory.Update(item, 1))
         {
             TileReset();
             return true;
@@ -79,13 +79,11 @@ public class TileComponent : MonoBehaviour
 
     public void OnInteract()
     {
-        var inventaire = FindObjectOfType<InventoryComponent>();
-
-        var selection = inventaire.GetSelected();
+        var selection = GameSystem.Instance.PlayerInventory.GetSelected();
         if (selection is IUsable usable)
         {
             if (usable.Use(this) && usable.Consumable)
-                inventaire.Remove(selection);
+                GameSystem.Instance.PlayerInventory.Remove(selection);
         }
     }
 

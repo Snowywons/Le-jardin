@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 enum Days
 {
@@ -19,15 +20,22 @@ public class ClockComponent : MonoBehaviour
     [SerializeField] [Range(0, 24)] int dayEndAt;
     [SerializeField] float daySpeed = 1f;
 
-    [SerializeField] Text timeText;
-    [SerializeField] Text dayText;
-    [SerializeField] Image arrowIndicator;
+    [Header("References")]
+    [SerializeField] string timeTextName;
+    [SerializeField] string dayTextName;
+    [SerializeField] string arrowIndicatorName;
+
+    private Text timeText;
+    private Text dayText;
+    private Image arrowIndicator;
 
     private int duration;
     private float time;
     private float currentDayTime;
 
     private bool isPaused;
+
+    private bool ready;
 
     private void Start()
     {
@@ -43,6 +51,9 @@ public class ClockComponent : MonoBehaviour
             currentDayTime += t;
             time += t;
         }
+
+        if (ready == false)
+            return;
 
         UpdateTimeText();
         UpdateArrowIndicator();
@@ -105,4 +116,35 @@ public class ClockComponent : MonoBehaviour
     public int GetDay() => ((int)time / duration) + 1;
 
     public float GetTime() => time;
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        ready = false;
+        FindReferences();
+        Debug.Log(ready);
+    }
+
+    private void FindReferences()
+    {
+        GameObject obj = GameObject.Find(timeTextName);
+        timeText = obj ? obj.GetComponent<Text>() : null;
+
+        obj = GameObject.Find(dayTextName);
+        dayText = obj ? obj.GetComponent<Text>() : null;
+
+        obj = GameObject.Find(arrowIndicatorName);
+        arrowIndicator = obj ? obj.GetComponent<Image>() : null;
+
+        ready = timeText && dayText && arrowIndicator;
+    }
 }
