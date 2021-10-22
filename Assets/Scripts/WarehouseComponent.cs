@@ -25,19 +25,14 @@ public class WarehouseComponent : MonoBehaviour
 
     public void Enter()
     {
-        GameSystem.Instance.Clock.TogglePause();
+        GameSystem.Instance.Clock.SetPause(true);
         GameSystem.Instance.PlayerInventory.RecycleAll();
     }
 
     public void Exit()
     {
-        GameSystem.Instance.Clock.TogglePause();
+        GameSystem.Instance.Clock.SetPause(false);
         GameSystem.Instance.PlayerInventory.RecycleAll();
         GameSystem.Instance.WarehouseInventory.RecycleAll();
-    }
-
-    private void ShelfUpdate()
-    {
-
     }
 }

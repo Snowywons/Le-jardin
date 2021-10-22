@@ -5,6 +5,7 @@ public class OnClickSystem : MonoBehaviour
 {
     [SerializeField] Camera cam;
     [SerializeField] string cameraName = "Main Camera";
+    public bool enabled = true;
 
     private void Start()
     {
@@ -14,16 +15,12 @@ public class OnClickSystem : MonoBehaviour
     private void FindCamera()
     {
         if (!cam)
-        {
-            Camera camera = GameObject.Find(cameraName).GetComponent<Camera>();
-            if (camera)
-                this.cam = camera;
-        }
+            cam = GameObject.Find(cameraName).GetComponent<Camera>();
     }
 
     private void Update()
     {
-        if (cam)
+        if (cam && enabled)
         {
             if (Input.GetMouseButtonDown(0))
             {
