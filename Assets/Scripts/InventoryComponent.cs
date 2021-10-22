@@ -72,7 +72,7 @@ public class InventoryComponent : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (!FindCanvasContent())
+        if (!FindCanvasContent() || slots == null)
             return;
 
         RecycleAll();
@@ -237,6 +237,8 @@ public class InventoryComponent : MonoBehaviour
 
     public void RecycleAll()
     {
+        if (slots == null) return;
+
         //Déplace tous les slots vers le conteneur de récupération de slots
         foreach (var s in slots)
             s.prefab.transform.SetParent(recycleSlotContainer.transform);
