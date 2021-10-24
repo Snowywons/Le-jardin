@@ -15,11 +15,14 @@ public class DialogueStarter : MonoBehaviour
     private void Start()
     {
         runner.Add(personnage.dialogue);
+        
     }
     public void StartDialogue()
     {
         runner.StartDialogue(personnage.startNode);
+       
     }
+
 
     [YarnCommand("setSprite")]
     public void SetSprite(string emotion)

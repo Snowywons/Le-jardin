@@ -10,5 +10,6 @@ public class Character : ScriptableObject
     public Sprite happy;
     public YarnProgram dialogue;
     public string startNode;
+    public string nom;
     
 }
