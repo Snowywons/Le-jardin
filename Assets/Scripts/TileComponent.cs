@@ -12,6 +12,7 @@ public class TileComponent : MonoBehaviour
     public int age;
     public Material wetMaterial;
     private Material dryMaterial;
+    private SaveSystemComponent savesystem;
     [SerializeField] GameObject outline;
 
     [HideInInspector] public Transform modele;
@@ -22,10 +23,20 @@ public class TileComponent : MonoBehaviour
     {
         isFarmable = zoneId <= GameSystem.Instance.farmableZoneCount;
 
+        savesystem = FindObjectOfType<SaveSystemComponent>();
         outline.gameObject.SetActive(false);
 
         dryMaterial = GetComponent<MeshRenderer>().material;
-
+        if(savesystem.tiles.TryGetValue(gameObject.name, out var tileInfo))
+        {
+            if (tileInfo.isWet)
+                SetWet();
+            if (tileInfo.plante)
+            {
+                Plant(tileInfo.plante);
+            }
+            age = tileInfo.age;
+        }
         if (instantGrow)
         {
             for (int i = 0; i < plante.maturingTime; i++, isWet = true)
@@ -91,8 +102,13 @@ public class TileComponent : MonoBehaviour
         var selection = GameSystem.Instance.PlayerInventory.GetSelected();
         if (selection is IUsable usable)
         {
-            if (usable.Use(this) && usable.Consumable)
-                GameSystem.Instance.PlayerInventory.Remove(selection);
+            if (usable.Use(this)) 
+            {
+                savesystem.tiles[gameObject.name] = new TileInfo(isWet, plante, age);
+                if (usable.Consumable)
+                    GameSystem.Instance.PlayerInventory.Remove(selection); 
+            }
+            
         }
     }
 

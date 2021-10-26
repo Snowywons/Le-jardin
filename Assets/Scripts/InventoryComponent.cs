@@ -29,11 +29,14 @@ public class InventoryComponent : MonoBehaviour
 
     public List<Slot> slots;
     private Slot selected;
+    private SaveSystemComponent saveSystem;
 
     private GameObject recycleSlotContainer;
 
     private void Start()
     {
+        saveSystem = FindObjectOfType<SaveSystemComponent>();
+
         recycleSlotContainer = new GameObject();
         recycleSlotContainer.name = $"{mode} Recycle Slot Container";
         recycleSlotContainer.transform.SetParent(transform);
@@ -93,12 +96,9 @@ public class InventoryComponent : MonoBehaviour
 
     private void InitPlayerInventory()
     {
-        Add(FindObjectOfType<WateringComponent>(), -1, false);
-        Add(FindObjectOfType<HarvestingComponent>(), -1, false);
-
-        foreach (PlantType plante in GameSystem.Instance.Plants)
+        foreach (SavedItem item in saveSystem.playerInventory)
         {
-            Add(new Seed(plante), 2);
+            Add(item.item, item.quantity, true);
         }
 
         SlotSelect();
@@ -106,10 +106,11 @@ public class InventoryComponent : MonoBehaviour
 
     private void InitWarehouseInventory()
     {
-        foreach (PlantType plante in GameSystem.Instance.Plants)
+        foreach(SavedItem item in saveSystem.warehouseInventory)
         {
-            Add(new Seed(plante), 2);
+            Add(item.item, item.quantity, true);
         }
+
     }
 
     private void SlotSelect(Slot slot = null)
