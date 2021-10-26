@@ -8,9 +8,9 @@ public class TileInfo
     public PlantType plante;
     public int age;
 
-    public TileInfo(bool iswet, PlantType typeplante, int ageplante)
+    public TileInfo(bool isWet, PlantType typeplante, int ageplante)
     {
-        isWet = iswet;
+        this.isWet = isWet;
         this.plante = typeplante;
         this.age = ageplante;
     }

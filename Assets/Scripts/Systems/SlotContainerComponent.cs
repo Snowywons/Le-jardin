@@ -44,8 +44,8 @@ public class SlotContainerComponent : MonoBehaviour, IDropHandler
         // On assigne l'inventaire du destinateur et du destinataire selon l'ancien canvasContent de l'item
         if (inventorySlot.oldCanvasContent.name == INVENTORY_CANVAS_CONTENT_NAME)
         {
-            invFrom = GameSystem.Instance.PlayerInventory; ;
-            invTo = GameSystem.Instance.WarehouseInventory; ;
+            invFrom = GameSystem.Instance.PlayerInventory;
+            invTo = GameSystem.Instance.WarehouseInventory;
         }
         else
         {

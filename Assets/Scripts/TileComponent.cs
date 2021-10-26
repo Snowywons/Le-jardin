@@ -24,19 +24,24 @@ public class TileComponent : MonoBehaviour
         isFarmable = zoneId <= GameSystem.Instance.farmableZoneCount;
 
         savesystem = FindObjectOfType<SaveSystemComponent>();
+
         outline.gameObject.SetActive(false);
 
         dryMaterial = GetComponent<MeshRenderer>().material;
-        if(savesystem.tiles.TryGetValue(gameObject.name, out var tileInfo))
+
+        if (savesystem.tiles.TryGetValue(gameObject.name, out var tileInfo))
         {
             if (tileInfo.isWet)
                 SetWet();
+
             if (tileInfo.plante)
             {
                 Plant(tileInfo.plante);
             }
+
             age = tileInfo.age;
         }
+
         if (instantGrow)
         {
             for (int i = 0; i < plante.maturingTime; i++, isWet = true)
@@ -125,16 +130,15 @@ public class TileComponent : MonoBehaviour
         {
             Destroy(modele.gameObject);
         }
+
         modele = Instantiate(nouveau);
         modele.position = new Vector3(0, 0.5f, 0);
         modele.SetParent(transform, false);
-
     }
 
     public void OnDayAdvance()
     {
         Debug.Log("advance");
-        
         
         if (isWet)
         {
