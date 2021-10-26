@@ -25,6 +25,11 @@ public class GameSystem : MonoBehaviour
     [SerializeField] GameObject pausePanel;
     [SerializeField] List<PlantType> plants;
 
+    public int farmableZoneCount = 1;
+    //private List<TileComponent> tiles;
+    //public const int MAX_TILES_COUNT = 80;
+    //private int nextTileId;
+
     private void Awake()
     {
         if (!Instance)
@@ -34,6 +39,7 @@ public class GameSystem : MonoBehaviour
             WarehouseInventory = warehouseInventory;
             Clock = clock;
             Plants = plants;
+            //tiles = new List<TileComponent>();
         }
     }
 
@@ -60,4 +66,34 @@ public class GameSystem : MonoBehaviour
             State = GameState.Resume;
         }
     }
+
+    //public void AddTilesToList(TileComponent tile)
+    //{
+    //    tiles.Add(tile);
+    //}
+
+    //public int GetTilesCount() => tiles.Count;
+
+    //public TileComponent GetTile(int id) => tiles[id];
+    //public TileComponent GetNextTile() => tiles[nextTileId++];
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        //ResetInitValues();
+    }
+
+    //private void ResetInitValues()
+    //{
+    //    nextTileId = 0;
+    //}
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TileComponent : MonoBehaviour
 {
+    public int zoneId;
+
+    public bool isFarmable;
     public bool isWet;
     public PlantType plante;
     public int age;
@@ -11,15 +14,18 @@ public class TileComponent : MonoBehaviour
     private Material dryMaterial;
     [SerializeField] GameObject outline;
 
-    private Transform modele;
+    [HideInInspector] public Transform modele;
 
     public bool instantGrow; // For Debug Only
 
     private void Start()
     {
+        isFarmable = zoneId <= GameSystem.Instance.farmableZoneCount;
+
         outline.gameObject.SetActive(false);
 
         dryMaterial = GetComponent<MeshRenderer>().material;
+
         if (instantGrow)
         {
             for (int i = 0; i < plante.maturingTime; i++, isWet = true)
@@ -39,6 +45,7 @@ public class TileComponent : MonoBehaviour
         }
         return false;
     }
+
     public bool Harvest()
     {
         // Security check
@@ -79,6 +86,8 @@ public class TileComponent : MonoBehaviour
 
     public void OnInteract()
     {
+        if (!isFarmable) return;
+
         var selection = GameSystem.Instance.PlayerInventory.GetSelected();
         if (selection is IUsable usable)
         {
@@ -93,6 +102,7 @@ public class TileComponent : MonoBehaviour
         plante = null;
         Destroy(modele.gameObject);
     }
+
     private void SetModel(Transform nouveau)
     {
         if (modele != null)
@@ -131,7 +141,6 @@ public class TileComponent : MonoBehaviour
 
     }
 
-
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
@@ -142,10 +151,26 @@ public class TileComponent : MonoBehaviour
 
     void OnMouseEnter()
     {
+        if (!isFarmable) return;
+
         outline.gameObject.SetActive(true);
     }
+
     void OnMouseExit()
     {
+        if (!isFarmable) return;
+
         outline.gameObject.SetActive(false);
+    }
+
+    private void CopyFromTile(TileComponent tile)
+    {
+        zoneId = tile.zoneId;
+        isFarmable = tile.isFarmable;
+        isWet = tile.isWet;
+        plante = tile.plante;
+        age = tile.age;
+        modele = tile.modele;
+        transform.position = tile.transform.position;
     }
 }
