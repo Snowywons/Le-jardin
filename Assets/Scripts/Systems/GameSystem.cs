@@ -25,10 +25,11 @@ public class GameSystem : MonoBehaviour
     [SerializeField] GameObject pausePanel;
     [SerializeField] List<PlantType> plants;
 
+    [Header("Player Stats")]
     public int farmableZoneCount = 1;
-    //private List<TileComponent> tiles;
-    //public const int MAX_TILES_COUNT = 80;
-    //private int nextTileId;
+    public int farmableZoneLevel = 0;
+    public int wateringCanLevel = 0;
+    public int inventorySlotLevel = 0;
 
     private void Awake()
     {
@@ -39,7 +40,6 @@ public class GameSystem : MonoBehaviour
             WarehouseInventory = warehouseInventory;
             Clock = clock;
             Plants = plants;
-            //tiles = new List<TileComponent>();
         }
     }
 
@@ -67,16 +67,6 @@ public class GameSystem : MonoBehaviour
         }
     }
 
-    //public void AddTilesToList(TileComponent tile)
-    //{
-    //    tiles.Add(tile);
-    //}
-
-    //public int GetTilesCount() => tiles.Count;
-
-    //public TileComponent GetTile(int id) => tiles[id];
-    //public TileComponent GetNextTile() => tiles[nextTileId++];
-
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
@@ -91,9 +81,4 @@ public class GameSystem : MonoBehaviour
     {
         //ResetInitValues();
     }
-
-    //private void ResetInitValues()
-    //{
-    //    nextTileId = 0;
-    //}
 }
