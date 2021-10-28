@@ -12,15 +12,31 @@ public enum GameState
 public class GameSystem : MonoBehaviour
 {
     public static GameSystem Instance { get; private set; }
-    public InventoryComponent PlayerInventory { get; private set; }
-    public InventoryComponent WarehouseInventory { get; private set; }
+    public InventoryComponent PlayerInventory
+    {
+        get
+        {
+            if (!playerInventory)
+                playerInventory = FindObjectsOfType<InventoryComponent>().FirstOrDefault(x => x.mode == InventoryMode.Player);
+            return playerInventory;
+        }
+    }
+    public InventoryComponent WarehouseInventory
+    {
+        get
+        {
+            if (!warehouseInventory)
+                warehouseInventory = FindObjectsOfType<InventoryComponent>().FirstOrDefault(x => x.mode == InventoryMode.Warehouse);
+            return warehouseInventory;
+        }
+    }
     public ClockComponent Clock { get; private set; }
     public List<PlantType> Plants { get; private set; }
     public GameState State { get; private set; }
 
     [SerializeField] ClockComponent clock;
-    [SerializeField] InventoryComponent playerInventory;
-    [SerializeField] InventoryComponent warehouseInventory;
+    private InventoryComponent playerInventory;
+    private InventoryComponent warehouseInventory;
 
     [SerializeField] GameObject pausePanel;
     [SerializeField] List<PlantType> plants;
@@ -36,8 +52,6 @@ public class GameSystem : MonoBehaviour
         if (!Instance)
         {
             Instance = GetComponent<GameSystem>();
-            PlayerInventory = playerInventory;
-            WarehouseInventory = warehouseInventory;
             Clock = clock;
             Plants = plants;
         }
@@ -50,7 +64,7 @@ public class GameSystem : MonoBehaviour
             TogglePause();
         }
     }
-    
+
     private void TogglePause()
     {
         if (State.Equals(GameState.Resume))

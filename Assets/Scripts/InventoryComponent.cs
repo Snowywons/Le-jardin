@@ -30,6 +30,7 @@ public class InventoryComponent : MonoBehaviour
     public List<Slot> slots;
     private Slot selected;
     private SaveSystemComponent saveSystem;
+    private Dictionary<int, SavedItem> savedInventory;
 
     private GameObject recycleSlotContainer;
 
@@ -75,6 +76,7 @@ public class InventoryComponent : MonoBehaviour
 
     public void UpdateUI()
     {
+        SaveAll();
         if (!FindCanvasContent() || slots == null)
             return;
 
@@ -98,19 +100,20 @@ public class InventoryComponent : MonoBehaviour
 
     private void InitPlayerInventory()
     {
-        foreach (SavedItem item in saveSystem.playerInventory)
+        savedInventory = saveSystem.playerInventory;
+        foreach (var item in saveSystem.playerInventory)
         {
-            Add(item.item, item.quantity, true);
+            SetSlotContent(item.Key, item.Value.item, item.Value.quantity, true);
         }
-
         SlotSelect();
     }
 
     private void InitWarehouseInventory()
     {
-        foreach(SavedItem item in saveSystem.warehouseInventory)
+        savedInventory = saveSystem.warehouseInventory;
+        foreach(var item in saveSystem.warehouseInventory)
         {
-            Add(item.item, item.quantity, true);
+            SetSlotContent(item.Key, item.Value.item, item.Value.quantity, true);
         }
 
     }
@@ -141,15 +144,16 @@ public class InventoryComponent : MonoBehaviour
         if (item == null) return false;
 
         // Mettre à jour la quantité ou ajouter l'item à un nouveau slot
-        var slot = FindSlot(item);
-        if (slot != null)
+        var slotIndex = FindSlotIndex(item);
+        if (slotIndex != -1)
         {
+            var slot = slots[slotIndex];
             slot.content.quantity += quantity;
             if (slot.content.item.Consumable)
                 slot.prefab.quantity.text = $"{slot.content.quantity}";
             else
                 slot.prefab.quantity.text = "";
-
+            savedInventory[slotIndex] = new SavedItem(slot.content.item, slot.content.quantity);
             return true;
         }
         else if (!IsFull())
@@ -160,24 +164,44 @@ public class InventoryComponent : MonoBehaviour
 
         return false;
     }
+    public void SaveAll()
+    {
+        if (slots == null) return;
+        for(int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].content == null)
+                savedInventory.Remove(i);
+            else
+                savedInventory[i] = new SavedItem(slots[i].content.item, slots[i].content.quantity);
+        }
+    }
 
     private void Add(InventoryItem item, int quantity = 1, bool outline = true)
     {
-        Slot emptySlot = FindSlot();
-        if (emptySlot == null) return;
+        int emptySlotIndex = FindSlotIndex();
+        if (emptySlotIndex == -1) return;
+        SetSlotContent(emptySlotIndex, item, quantity, outline);
+        savedInventory[emptySlotIndex] = new SavedItem(item, quantity);
+    }
 
-        emptySlot.prefab.quantity.text = quantity > -1 ? $"{quantity}" : "";
-        emptySlot.prefab.icon.sprite = item.Sprite;
-        emptySlot.prefab.icon.enabled = true;
-        emptySlot.content = new Item(item, quantity);
-        emptySlot.prefab.outline.enabled = outline;
+    private void SetSlotContent(int index, InventoryItem item, int quantity, bool outline)
+    {
+        if (index >= slots.Count) return;
+
+        Slot slot = slots[index];       
+        slot.prefab.quantity.text = quantity > -1 ? $"{quantity}" : "";
+        slot.prefab.icon.sprite = item.Sprite;
+        slot.prefab.icon.enabled = true;
+        slot.content = new Item(item, quantity);
+        slot.prefab.outline.enabled = outline;
     }
 
     public void Remove(InventoryItem item, bool all = false)
     {
-        var slot = FindSlot(item);
-        if (slot != null)
+        var slotIndex = FindSlotIndex(item);
+        if (slotIndex != -1)
         {
+            var slot = slots[slotIndex];
             slot.content.quantity -= all ? slot.content.quantity : 1;
             slot.prefab.quantity.text = $"{slot.content.quantity}";
 
@@ -187,6 +211,11 @@ public class InventoryComponent : MonoBehaviour
                 slot.prefab.icon.enabled = false;
                 slot.prefab.quantity.text = "";
                 slot.content = null;
+                savedInventory.Remove(slotIndex);
+            }
+            else
+            { 
+                savedInventory[slotIndex] = new SavedItem(slot.content.item, slot.content.quantity); 
             }
         }  
     }
@@ -203,16 +232,23 @@ public class InventoryComponent : MonoBehaviour
             slots.Add(new Slot(slot, null, (KeyCode)((int)KeyCode.Alpha1+slots.Count)));
     }
 
-    public void CopyToNewSlot(Slot copyFrom)
+    public void MoveToNewSlot(Slot source)
     {
-        Slot emptySlot = FindSlot();
-        emptySlot.prefab.icon.sprite = copyFrom.prefab.icon.sprite;
-        emptySlot.prefab.icon.enabled = copyFrom.prefab.icon.enabled;
-        emptySlot.content = copyFrom.content;
-        emptySlot.prefab.outline.enabled = copyFrom.prefab.outline.enabled;
-        emptySlot.prefab.quantity.text = copyFrom.prefab.quantity.text;
+        var slotIndex = FindSlotIndex();
+        if (slotIndex == -1)
+            return;
 
-        copyFrom.Clear();
+        Slot emptySlot = slots[slotIndex];
+        emptySlot.prefab.icon.sprite = source.prefab.icon.sprite;
+        emptySlot.prefab.icon.enabled = source.prefab.icon.enabled;
+        emptySlot.content = source.content;
+        emptySlot.prefab.outline.enabled = source.prefab.outline.enabled;
+        emptySlot.prefab.quantity.text = source.prefab.quantity.text;
+
+        savedInventory[slotIndex] = new SavedItem(emptySlot.content.item, emptySlot.content.quantity);
+
+        source.Clear();
+        savedInventory.Remove(slots.IndexOf(source));
     }
 
     public Slot FindSlot(InventoryItem item) => slots.FirstOrDefault(x => x.content?.item.ID == item.ID);
@@ -220,6 +256,9 @@ public class InventoryComponent : MonoBehaviour
     public Slot FindSlot(int index) => slots[index];
 
     public Slot FindSlot() => slots.FirstOrDefault(s => s.content == null);
+
+    public int FindSlotIndex() => slots.FindIndex(s => s.content == null);
+    public int FindSlotIndex(InventoryItem item) => slots.FindIndex(x => x.content?.item.ID == item.ID);
 
     public bool IsFull() => slots.All(x => x.content != null);
 

@@ -56,6 +56,7 @@ public class TileComponent : MonoBehaviour
         {
             plante = type;
             SetAge(0);
+            return true;
         }
         return false;
     }
@@ -226,7 +227,7 @@ public class TileComponent : MonoBehaviour
     private void ShowTilesOutline(bool shown)
     {
         // Si l'objet en main est une watering can
-        if (GameSystem.Instance.PlayerInventory.GetSelected().Name == "Watering Can")
+        if (GameSystem.Instance.PlayerInventory.GetSelected()?.Name == "Watering Can")
         {
             int level = GameSystem.Instance.wateringCanLevel;
             

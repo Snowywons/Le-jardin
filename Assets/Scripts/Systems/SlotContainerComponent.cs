@@ -58,7 +58,7 @@ public class SlotContainerComponent : MonoBehaviour, IDropHandler
         {
             // Si l'inventaire n'est pas plein, alors on prend prend le premier slot de libre et on y insert l'item
             if (!invFrom.IsFull())
-                invFrom.CopyToNewSlot(inventorySlot.slot);
+                invFrom.MoveToNewSlot(inventorySlot.slot);
             
             invFrom.Sort();
             invFrom.UpdateUI();
@@ -72,6 +72,7 @@ public class SlotContainerComponent : MonoBehaviour, IDropHandler
         {
             slot.content.quantity += item.quantity;
             slot.Update();
+            invTo.SaveAll();
             invFrom.Remove(item.item, true);
             invFrom.Sort();
             invFrom.UpdateUI();
