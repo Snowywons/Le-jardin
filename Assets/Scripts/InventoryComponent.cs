@@ -90,7 +90,9 @@ public class InventoryComponent : MonoBehaviour
 
     private bool FindCanvasContent()
     {
-        canvasContent = GameObject.Find(canvasContentName);
+        var allCanvasContent = (CanvasContentComponent[]) FindObjectsOfType(typeof(CanvasContentComponent), true);
+        var found = allCanvasContent.Where(o => o.name == canvasContentName).FirstOrDefault();
+        canvasContent = found ? found.gameObject : null;
         return canvasContent != null;
     }
 
