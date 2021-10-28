@@ -4499,7 +4499,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1392384687}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1556162458}
+        m_TargetAssemblyTypeName: WarehouseUpgradesComponent, Assembly-CSharp
+        m_MethodName: BuyWateringCanUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1392384687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5500,12 +5512,20 @@ MonoBehaviour:
   farmableZoneLevelText: {fileID: 329898446}
   farmableZonePriceText: {fileID: 2032164084}
   farmableZoneBuyButton: {fileID: 2067133511}
-  waterCanUpgrades: []
-  waterCanLevelText: {fileID: 1392503555}
-  waterCanPriceText: {fileID: 1801227587}
-  inventorySlotUpgrades: []
+  wateringCanUpgrades:
+  - price: 2000
+  - price: 6000
+  wateringCanLevelText: {fileID: 1392503555}
+  wateringCanPriceText: {fileID: 1801227587}
+  wateringCanBuyButton: {fileID: 1392384686}
+  inventorySlotUpgrades:
+  - price: 1000
+  - price: 2000
+  - price: 3000
+  - price: 4000
   inventorySlotLevelText: {fileID: 186329195}
   inventorySlotPriceText: {fileID: 1863162384}
+  inventorySlotBuyButton: {fileID: 397460834}
   balanceText: {fileID: 600746186}
 --- !u!1 &1565854631
 GameObject:

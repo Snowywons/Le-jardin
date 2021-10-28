@@ -41,9 +41,13 @@ public class WarehouseUpgradesComponent : MonoBehaviour
     private void Init()
     {
         if (farmableZoneUpgrades != null && farmableZoneUpgrades.Count > 0)
-        {
             UpdateUI(gs.farmableZoneLevel, farmableZoneUpgrades, farmableZoneLevelText, farmableZonePriceText, farmableZoneBuyButton);
-        }
+
+        if (wateringCanUpgrades != null && wateringCanUpgrades.Count > 0)
+            UpdateUI(gs.wateringCanLevel, wateringCanUpgrades, wateringCanLevelText, wateringCanPriceText, wateringCanBuyButton);
+
+        if (inventorySlotUpgrades != null && inventorySlotUpgrades.Count > 0)
+            UpdateUI(gs.inventorySlotLevel, inventorySlotUpgrades, inventorySlotLevelText, inventorySlotPriceText, inventorySlotBuyButton);
 
         balanceText.text = eco.Balance.ToString();
     }
@@ -90,7 +94,8 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         if (eco.SafePay(inventorySlotUpgrades[nextLevel - 1].price))
         {
             UpdateUI(nextLevel, inventorySlotUpgrades, inventorySlotLevelText, inventorySlotPriceText, inventorySlotBuyButton);
-            gs.wateringCanLevel++;
+            gs.inventorySlotLevel++;
+            gs.PlayerInventory.Expand();
         }
     }
 
@@ -98,7 +103,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
     {
         bool isMaxLevel = nextLevel < upgrades.Count;
         levelText.text = isMaxLevel ? $"{nextLevel + 1}" : "MAX";
-        priceText.text = isMaxLevel ? $"{farmableZoneUpgrades[nextLevel].price}$" : "";
+        priceText.text = isMaxLevel ? $"{upgrades[nextLevel].price}$" : "";
         buyButton.interactable = isMaxLevel;
         balanceText.text = eco.Balance.ToString();
     }

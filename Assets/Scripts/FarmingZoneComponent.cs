@@ -25,19 +25,8 @@ public class FarmingZoneComponent : MonoBehaviour
                         ps.gameObject.SetActive(true);
                 }
             }
-            //SetDesiredHeight(zones[i]);
         }
     }
-
-    //public void Claim(int id)
-    //{
-    //    if (zones != null)
-    //    {
-    //        GameObject zone = zones[id];
-    //        SetDesiredHeight(zone);
-    //        SetZoneTiles(zone);
-    //    }
-    //}
 
     private IEnumerator SetDesiredHeight(GameObject zone)
     {
@@ -55,29 +44,4 @@ public class FarmingZoneComponent : MonoBehaviour
 
         zone.transform.localPosition = newPos;
     }
-
-    //private void SetDesiredHeight(GameObject zone)
-    //{
-    //    Vector3 newPos = zone.transform.localPosition;
-    //    newPos.y = desiredHeight;
-    //    zone.transform.localPosition = newPos;
-    //}
-
-    // Récursivité pour accéder à tous les enfants d'une zone
-    //private void SetZoneTiles(GameObject obj)
-    //{
-    //    if (null == obj) return;
-
-    //    foreach (Transform child in obj.transform)
-    //    {
-    //        if (null == child) continue;
-
-    //        TileComponent tile = child.gameObject.GetComponent<TileComponent>();
-
-    //        if (tile != null)
-    //            tile.isFarmable = true;
-
-    //        SetZoneTiles(child.gameObject);
-    //    }
-    //}
 }

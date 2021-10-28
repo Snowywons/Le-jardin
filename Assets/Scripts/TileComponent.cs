@@ -19,6 +19,8 @@ public class TileComponent : MonoBehaviour
 
     public bool instantGrow; // For Debug Only
 
+    public static HashSet<TileComponent> tiles = new HashSet<TileComponent>();
+
     private void Start()
     {
         isFarmable = zoneId <= GameSystem.Instance.farmableZoneCount;
@@ -111,9 +113,8 @@ public class TileComponent : MonoBehaviour
             {
                 savesystem.tiles[gameObject.name] = new TileInfo(isWet, plante, age);
                 if (usable.Consumable)
-                    GameSystem.Instance.PlayerInventory.Remove(selection); 
+                    GameSystem.Instance.PlayerInventory.Remove(selection);
             }
-            
         }
     }
 
@@ -166,21 +167,21 @@ public class TileComponent : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             OnDayAdvance();
-        }        
+        }
     }
 
     void OnMouseEnter()
     {
         if (!isFarmable) return;
 
-        outline.gameObject.SetActive(true);
+        ShowTilesOutline(true);
     }
 
     void OnMouseExit()
     {
         if (!isFarmable) return;
 
-        outline.gameObject.SetActive(false);
+        ShowTilesOutline(false);
     }
 
     private void CopyFromTile(TileComponent tile)
@@ -192,5 +193,74 @@ public class TileComponent : MonoBehaviour
         age = tile.age;
         modele = tile.modele;
         transform.position = tile.transform.position;
+    }
+
+    private HashSet<TileComponent> FindAllAdjacents(bool inRowOnly = false)
+    {
+        string[] name = gameObject.name.Split(' ');
+        int id = int.Parse(name[1]);
+
+        int zoneId = (id / 10) * 10; // 0, 10, 20, 30...
+
+
+        tiles.Clear();
+
+        // Détermine les limites de la recherche de tiles
+        int fromId = inRowOnly && id - zoneId >= 5 ? zoneId += 5 : zoneId;
+        int toId = inRowOnly ? zoneId + 5 : zoneId + 10;
+
+        for (int i = fromId, j = 0; i < toId; i++, j++)
+        {
+            GameObject tile = GameObject.Find($"Tile {i}");
+            if (tile)
+                tiles.Add(tile.GetComponent<TileComponent>());
+        }
+
+        return tiles;
+    }
+
+    private void ShowTilesOutline(bool shown)
+    {
+        // Si l'objet en main est une watering can
+        if (GameSystem.Instance.PlayerInventory.GetSelected().Name == "Watering Can")
+        {
+            int level = GameSystem.Instance.wateringCanLevel;
+            
+            // Niveau 0
+            if (level == 0)
+            {
+                // On vide le hashset de tiles par défaut
+                tiles.Clear();
+                outline.gameObject.SetActive(shown);
+            }
+            else
+
+            // Niveau 1
+            if (level == 1)
+            {
+                FindAllAdjacents(true);
+                foreach (var t in tiles)
+                    t.outline.gameObject.SetActive(shown);
+            }
+            else
+
+            // Niveau 2
+            if (level == 2)
+            {
+                FindAllAdjacents();
+                foreach (var t in tiles)
+                    t.outline.gameObject.SetActive(shown);
+            }
+        }
+        else
+        {
+            // L'objet en main n'est pas la watering can..
+            // Tous les outlines des tiles contenues dans le hashset doivent être désactivés
+            foreach (var t in tiles)
+                t.outline.gameObject.SetActive(false);
+
+            tiles.Clear();
+            outline.gameObject.SetActive(shown);
+        }
     }
 }

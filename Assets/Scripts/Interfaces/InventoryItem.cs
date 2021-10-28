@@ -7,4 +7,3 @@ public interface InventoryItem
     Sprite Sprite { get; }
     public bool Consumable { get; }
 }
-
