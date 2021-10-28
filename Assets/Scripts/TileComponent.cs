@@ -38,10 +38,9 @@ public class TileComponent : MonoBehaviour
 
             if (tileInfo.plante)
             {
-                Plant(tileInfo.plante);
-            }
-
-            age = tileInfo.age;
+                plante = tileInfo.plante;
+                SetAge(tileInfo.age);
+            }            
         }
 
         if (instantGrow)
@@ -55,11 +54,8 @@ public class TileComponent : MonoBehaviour
     {
         if (plante == null)
         {
-            Debug.Log("Planter");
-            SetModel(type.seed);
             plante = type;
-            age = 0;
-            return true;
+            SetAge(0);
         }
         return false;
     }
@@ -109,13 +105,18 @@ public class TileComponent : MonoBehaviour
         var selection = GameSystem.Instance.PlayerInventory.GetSelected();
         if (selection is IUsable usable)
         {
-            if (usable.Use(this)) 
+            if (usable.Use(this))
             {
-                savesystem.tiles[gameObject.name] = new TileInfo(isWet, plante, age);
+                SaveTile();
                 if (usable.Consumable)
                     GameSystem.Instance.PlayerInventory.Remove(selection);
             }
         }
+    }
+
+    private void SaveTile()
+    {
+        savesystem.tiles[gameObject.name] = new TileInfo(isWet, plante, age);
     }
 
     private void TileReset()
@@ -136,6 +137,17 @@ public class TileComponent : MonoBehaviour
         modele.position = new Vector3(0, 0.5f, 0);
         modele.SetParent(transform, false);
     }
+    private void SetAge(int age)
+    {
+        this.age = age;
+        if (age >= plante.maturingTime)
+            SetModel(plante.mature);
+        else if (age >= 1)
+            SetModel(plante.young);
+        else 
+            SetModel(plante.seed);
+
+    }
 
     public void OnDayAdvance()
     {
@@ -147,18 +159,10 @@ public class TileComponent : MonoBehaviour
             isWet = false;
             if (plante != null)
             {
-                age++;
-        
-                if (age == 1)
-                {
-                    SetModel(plante.young);
-                }
-                else if (age == plante.maturingTime)
-                {
-                    SetModel(plante.mature);
-                }
+                SetAge(age+1);                
             }
         }
+        SaveTile();
 
     }
 
