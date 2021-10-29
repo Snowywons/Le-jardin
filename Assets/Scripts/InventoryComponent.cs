@@ -17,11 +17,6 @@ public class InventoryComponent : MonoBehaviour
     [SerializeField] bool hotkey;
     [SerializeField] bool showSlotIndex;
 
-    [Header("Properties")]
-    [SerializeField] int capacityMin = 9;
-    [SerializeField] int capacityMax = 9;
-    public int Capacity { get; private set; }
-
     [Header("References")]
     private GameObject canvasContent;
     [SerializeField] string canvasContentName;
@@ -33,6 +28,7 @@ public class InventoryComponent : MonoBehaviour
     private Dictionary<int, SavedItem> savedInventory;
 
     private GameObject recycleSlotContainer;
+    private const int maxCapacity = 8;
 
     private void Start()
     {
@@ -43,9 +39,8 @@ public class InventoryComponent : MonoBehaviour
         recycleSlotContainer.transform.SetParent(transform);
 
         slots = new List<Slot>();
-        Capacity = capacityMin;
 
-        InitSlots();
+        
 
         if (mode.Equals(InventoryMode.Player)) InitPlayerInventory();
         if (mode.Equals(InventoryMode.Warehouse)) InitWarehouseInventory();
@@ -68,9 +63,9 @@ public class InventoryComponent : MonoBehaviour
         }
     }
 
-    private void InitSlots()
+    private void InitSlots(int capacity)
     {
-        for (int i = 0; i < Capacity; i++)
+        for (int i = 0; i < capacity; i++)
             CreateNewSlot();
     }
 
@@ -100,6 +95,7 @@ public class InventoryComponent : MonoBehaviour
 
     private void InitPlayerInventory()
     {
+        InitSlots(saveSystem.playerInventoryCapacity);
         savedInventory = saveSystem.playerInventory;
         foreach (var item in saveSystem.playerInventory)
         {
@@ -110,6 +106,7 @@ public class InventoryComponent : MonoBehaviour
 
     private void InitWarehouseInventory()
     {
+        InitSlots(saveSystem.warehouseInventoryCapacity);
         savedInventory = saveSystem.warehouseInventory;
         foreach(var item in saveSystem.warehouseInventory)
         {
@@ -176,14 +173,6 @@ public class InventoryComponent : MonoBehaviour
         }
     }
 
-    private void Add(InventoryItem item, int quantity = 1, bool outline = true)
-    {
-        int emptySlotIndex = FindSlotIndex();
-        if (emptySlotIndex == -1) return;
-        SetSlotContent(emptySlotIndex, item, quantity, outline);
-        savedInventory[emptySlotIndex] = new SavedItem(item, quantity);
-    }
-
     private void SetSlotContent(int index, InventoryItem item, int quantity, bool outline)
     {
         if (index >= slots.Count) return;
@@ -194,6 +183,14 @@ public class InventoryComponent : MonoBehaviour
         slot.prefab.icon.enabled = true;
         slot.content = new Item(item, quantity);
         slot.prefab.outline.enabled = outline;
+    }
+
+    private void Add(InventoryItem item, int quantity = 1, bool outline = true)
+    {
+        int emptySlotIndex = FindSlotIndex();
+        if (emptySlotIndex == -1) return;
+        SetSlotContent(emptySlotIndex, item, quantity, outline);
+        savedInventory[emptySlotIndex] = new SavedItem(item, quantity);
     }
 
     public void Remove(InventoryItem item, bool all = false)
@@ -264,11 +261,12 @@ public class InventoryComponent : MonoBehaviour
 
     public void Expand()
     {
-        if (Capacity < capacityMax)
+        if (mode == InventoryMode.Warehouse) return;
+        if (slots.Count < maxCapacity)
         {
-            Capacity++;
             CreateNewSlot();
             UpdateUI();
+            saveSystem.playerInventoryCapacity++;
         }
     }
 

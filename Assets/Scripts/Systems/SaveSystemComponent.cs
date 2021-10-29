@@ -7,6 +7,8 @@ public class SaveSystemComponent : MonoBehaviour
     public Dictionary<string, TileInfo> tiles = new Dictionary<string, TileInfo>();
     public Dictionary<int, SavedItem> playerInventory = new Dictionary<int, SavedItem>();
     public Dictionary<int, SavedItem> warehouseInventory = new Dictionary<int, SavedItem>();
+    public int playerInventoryCapacity = 4;
+    public int warehouseInventoryCapacity = 20;
 
     //Valeurs initiales
     public void Start()
@@ -16,8 +18,10 @@ public class SaveSystemComponent : MonoBehaviour
 
         foreach (PlantType plante in GameSystem.Instance.Plants)
         {
-            playerInventory.Add(playerInventory.Count, new SavedItem { item = new Seed(plante), quantity = 2});
-            warehouseInventory.Add(warehouseInventory.Count, new SavedItem { item = new Seed(plante), quantity = 2 });
+            if(playerInventory.Count < playerInventoryCapacity) 
+                playerInventory.Add(playerInventory.Count, new SavedItem { item = new Seed(plante), quantity = 2});
+            if(warehouseInventory.Count < warehouseInventoryCapacity)
+                warehouseInventory.Add(warehouseInventory.Count, new SavedItem { item = new Seed(plante), quantity = 2 });
         }
     }
 }
