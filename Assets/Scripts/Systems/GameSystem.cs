@@ -46,6 +46,7 @@ public class GameSystem : MonoBehaviour
     public int farmableZoneLevel = 0;
     public int wateringCanLevel = 0;
     public int inventorySlotLevel = 0;
+    public Dictionary<string, InventoryItem> itemDB;
 
     private void Awake()
     {
@@ -54,6 +55,19 @@ public class GameSystem : MonoBehaviour
             Instance = GetComponent<GameSystem>();
             Clock = clock;
             Plants = plants;
+            itemDB = new Dictionary<string, InventoryItem>();
+            foreach(var plant in Plants)
+            {
+                itemDB.Add(plant.ID, plant);
+                var seed = new Seed(plant);
+                itemDB.Add(seed.ID, seed);
+            }
+            var wateringCan = FindObjectOfType<WateringComponent>();
+            itemDB.Add(wateringCan.ID, wateringCan);
+            var shovel = FindObjectOfType<HarvestingComponent>();
+            itemDB.Add(shovel.ID, shovel);
+            var saveSystem = FindObjectOfType<SaveSystemComponent>();
+            saveSystem.Initialize();
         }
     }
 

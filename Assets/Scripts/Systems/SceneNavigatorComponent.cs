@@ -12,6 +12,7 @@ public class SceneNavigatorComponent : MonoBehaviour
 
     public void Load(int sceneId)
     {
+        FindObjectOfType<SaveSystemComponent>().Save();
         StartCoroutine(ELoad(sceneId));
     }
 

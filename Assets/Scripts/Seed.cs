@@ -8,7 +8,7 @@ public class Seed : IUsable
     private readonly PlantType _typePlante;
     public bool Consumable => true;
 
-    string InventoryItem.ID => $"seed_{_typePlante.ID}";
+    public string ID => $"seed_{_typePlante.ID}";
     string InventoryItem.Name => _typePlante.name;
     Sprite InventoryItem.Sprite => _typePlante.seedSprite;
 
