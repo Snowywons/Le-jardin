@@ -12,8 +12,12 @@ public class SaveSystemComponent : MonoBehaviour
     public Dictionary<string, TileInfo> tiles = new Dictionary<string, TileInfo>();
     public Dictionary<int, SavedItem> playerInventory = new Dictionary<int, SavedItem>();
     public Dictionary<int, SavedItem> warehouseInventory = new Dictionary<int, SavedItem>();
-    public int playerInventoryCapacity;
-    public int warehouseInventoryCapacity;
+    public int playerInventoryLevel;
+    public int playerInventoryCapacity => playerInventoryLevel + 4;
+    public int warehouseInventoryCapacity => 20;
+    public int wateringCanLevel;
+    public int farmingZoneLevel;
+    public int farmingZonesUnlocked => farmingZoneLevel + 3;
     string path;
 
     //Valeurs initiales
@@ -36,8 +40,9 @@ public class SaveSystemComponent : MonoBehaviour
         warehouseInventory.Clear();
         playerInventory.Add(playerInventory.Count, new SavedItem { item = FindObjectOfType<WateringComponent>(), quantity = -1 });
         playerInventory.Add(playerInventory.Count, new SavedItem { item = FindObjectOfType<HarvestingComponent>(), quantity = -1 });
-        playerInventoryCapacity = 4;
-        warehouseInventoryCapacity = 20;
+        playerInventoryLevel = 0;
+        farmingZoneLevel = 0;
+        wateringCanLevel = 0;
 
         foreach (PlantType plante in GameSystem.Instance.Plants)
         {
@@ -69,8 +74,10 @@ public class SaveSystemComponent : MonoBehaviour
                                     new JProperty("tiles", jTiles),
                                     new JProperty("player", jPlayer),
                                     new JProperty("warehouse", jWarehouse),
-                                    new JProperty("playerCapacity", playerInventoryCapacity),
-                                    new JProperty("warehouseCapacity", warehouseInventoryCapacity));
+                                    new JProperty("playerInventoryLevel", playerInventoryLevel),
+                                    new JProperty("wateringCanLevel", wateringCanLevel),
+                                    new JProperty("farmingZoneLevel", farmingZoneLevel));
+        
         using var jsonWriter = new JsonTextWriter(writer);
         jsonWriter.Formatting = Formatting.Indented;
         saveFile.WriteTo(jsonWriter);
@@ -82,8 +89,9 @@ public class SaveSystemComponent : MonoBehaviour
         using var jsonReader = new JsonTextReader(reader);
 
         JObject savefile = JObject.Load(jsonReader);
-        playerInventoryCapacity = savefile.Value<int>("playerCapacity");
-        warehouseInventoryCapacity = savefile.Value<int>("warehouseCapacity");
+        playerInventoryLevel = savefile.Value<int>("playerInventoryLevel");
+        wateringCanLevel = savefile.Value<int>("wateringCanLevel");
+        farmingZoneLevel = savefile.Value<int>("farmingZonesUnlocked");
         var jTiles = (JObject)savefile["tiles"];
         tiles.Clear();
         foreach(var tile in jTiles.Properties())
@@ -91,7 +99,7 @@ public class SaveSystemComponent : MonoBehaviour
             var tileValue = tile.Value;
             var plantID = tileValue.Value<string>("plant");
             var tileInfo = new TileInfo(tileValue.Value<bool>("isWet"),
-                                        (PlantType)GameSystem.Instance.itemDB[plantID],
+                                        plantID != null?(PlantType)GameSystem.Instance.itemDB[plantID]: null,
                                         tileValue.Value<int>("age"));
             tiles[tile.Name] = tileInfo;
         }

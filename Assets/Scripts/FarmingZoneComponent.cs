@@ -7,9 +7,11 @@ public class FarmingZoneComponent : MonoBehaviour
     [SerializeField] List<GameObject> zones;
     [SerializeField] float desiredHeight;
 
+
     private void Start()
     {
-        for (int i = 0; i < GameSystem.Instance.farmableZoneCount; i++)
+        var saveSystem = FindObjectOfType<SaveSystemComponent>();
+        for (int i = 0; i < saveSystem.farmingZonesUnlocked; i++)
         {
             if (zones != null)
             {

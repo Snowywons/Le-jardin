@@ -27,6 +27,8 @@ public class WarehouseUpgradesComponent : MonoBehaviour
     [Header("Balance")]
     [SerializeField] Text balanceText;
 
+    SaveSystemComponent savesystem;
+
     private GameSystem gs;
     private EconomyComponent eco;
 
@@ -34,27 +36,27 @@ public class WarehouseUpgradesComponent : MonoBehaviour
     {
         gs = GameSystem.Instance;
         eco = gs.GetComponent<EconomyComponent>();
-
+        savesystem = FindObjectOfType<SaveSystemComponent>();
         Init();
     }
 
     private void Init()
     {
         if (farmableZoneUpgrades != null && farmableZoneUpgrades.Count > 0)
-            UpdateUI(gs.farmableZoneLevel, farmableZoneUpgrades, farmableZoneLevelText, farmableZonePriceText, farmableZoneBuyButton);
+            UpdateUI(savesystem.farmingZoneLevel, farmableZoneUpgrades, farmableZoneLevelText, farmableZonePriceText, farmableZoneBuyButton);
 
         if (wateringCanUpgrades != null && wateringCanUpgrades.Count > 0)
-            UpdateUI(gs.wateringCanLevel, wateringCanUpgrades, wateringCanLevelText, wateringCanPriceText, wateringCanBuyButton);
+            UpdateUI(savesystem.wateringCanLevel, wateringCanUpgrades, wateringCanLevelText, wateringCanPriceText, wateringCanBuyButton);
 
         if (inventorySlotUpgrades != null && inventorySlotUpgrades.Count > 0)
-            UpdateUI(gs.inventorySlotLevel, inventorySlotUpgrades, inventorySlotLevelText, inventorySlotPriceText, inventorySlotBuyButton);
+            UpdateUI(savesystem.playerInventoryLevel, inventorySlotUpgrades, inventorySlotLevelText, inventorySlotPriceText, inventorySlotBuyButton);
 
         balanceText.text = eco.Balance.ToString();
     }
 
     public void BuyFarmableZoneUpgrade()
     {
-        int nextLevel = gs.farmableZoneLevel + 1;
+        int nextLevel = savesystem.farmingZoneLevel + 1;
 
         // Vérifie s'il y a des upgrades d'achetables
         if (nextLevel > farmableZoneUpgrades.Count) return;
@@ -63,14 +65,14 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         if (eco.SafePay(farmableZoneUpgrades[nextLevel - 1].price))
         {
             UpdateUI(nextLevel, farmableZoneUpgrades, farmableZoneLevelText, farmableZonePriceText, farmableZoneBuyButton);
-            gs.farmableZoneLevel++;
-            gs.farmableZoneCount++;
+            savesystem.farmingZoneLevel++;
+
         }
     }
 
     public void BuyWateringCanUpgrade()
     {
-        int nextLevel = gs.wateringCanLevel + 1;
+        int nextLevel = savesystem.wateringCanLevel + 1;
 
         // Vérifie s'il y a des upgrades d'achetables
         if (nextLevel > wateringCanUpgrades.Count) return;
@@ -79,13 +81,13 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         if (eco.SafePay(wateringCanUpgrades[nextLevel - 1].price))
         {
             UpdateUI(nextLevel, wateringCanUpgrades, wateringCanLevelText, wateringCanPriceText, wateringCanBuyButton);
-            gs.wateringCanLevel++;
+            savesystem.wateringCanLevel++;
         }
     }
 
     public void BuyInventorySlotUpgrade()
     {
-        int nextLevel = gs.inventorySlotLevel + 1;
+        int nextLevel = savesystem.playerInventoryLevel + 1;
 
         // Vérifie s'il y a des upgrades d'achetables
         if (nextLevel > inventorySlotUpgrades.Count) return;
@@ -94,7 +96,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         if (eco.SafePay(inventorySlotUpgrades[nextLevel - 1].price))
         {
             UpdateUI(nextLevel, inventorySlotUpgrades, inventorySlotLevelText, inventorySlotPriceText, inventorySlotBuyButton);
-            gs.inventorySlotLevel++;
+            savesystem.playerInventoryLevel++;
             gs.PlayerInventory.Expand();
         }
     }

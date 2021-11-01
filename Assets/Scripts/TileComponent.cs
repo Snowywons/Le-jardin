@@ -23,9 +23,8 @@ public class TileComponent : MonoBehaviour
 
     private void Start()
     {
-        isFarmable = zoneId <= GameSystem.Instance.farmableZoneCount;
-
         savesystem = FindObjectOfType<SaveSystemComponent>();
+        isFarmable = zoneId <= savesystem.farmingZonesUnlocked;
 
         outline.gameObject.SetActive(false);
 
@@ -34,8 +33,11 @@ public class TileComponent : MonoBehaviour
         if (savesystem.tiles.TryGetValue(gameObject.name, out var tileInfo))
         {
             if (tileInfo.isWet)
-                SetWet();
-
+            {
+                isWet = true;
+                GetComponent<MeshRenderer>().material = wetMaterial;
+            }
+                
             if (tileInfo.plante)
             {
                 plante = tileInfo.plante;
@@ -97,6 +99,7 @@ public class TileComponent : MonoBehaviour
     {
         isWet = true;
         GetComponent<MeshRenderer>().material = wetMaterial;
+        SaveTile();
     }
 
     public void OnInteract()
@@ -229,7 +232,7 @@ public class TileComponent : MonoBehaviour
         // Si l'objet en main est une watering can
         if (GameSystem.Instance.PlayerInventory.GetSelected()?.Name == "Watering Can")
         {
-            int level = GameSystem.Instance.wateringCanLevel;
+            int level = savesystem.wateringCanLevel;
             
             // Niveau 0
             if (level == 0)

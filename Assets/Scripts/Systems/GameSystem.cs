@@ -41,11 +41,6 @@ public class GameSystem : MonoBehaviour
     [SerializeField] GameObject pausePanel;
     [SerializeField] List<PlantType> plants;
 
-    [Header("Player Stats")]
-    public int farmableZoneCount = 1;
-    public int farmableZoneLevel = 0;
-    public int wateringCanLevel = 0;
-    public int inventorySlotLevel = 0;
     public Dictionary<string, InventoryItem> itemDB;
 
     private void Awake()

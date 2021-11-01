@@ -266,7 +266,6 @@ public class InventoryComponent : MonoBehaviour
         {
             CreateNewSlot();
             UpdateUI();
-            saveSystem.playerInventoryCapacity++;
         }
     }
 
