@@ -30,12 +30,11 @@ public class WarehouseUpgradesComponent : MonoBehaviour
     SaveSystemComponent savesystem;
 
     private GameSystem gs;
-    private EconomyComponent eco;
+    public EconomyComponent eco;
 
     private void Start()
     {
         gs = GameSystem.Instance;
-        eco = gs.GetComponent<EconomyComponent>();
         savesystem = FindObjectOfType<SaveSystemComponent>();
         Init();
     }
@@ -62,7 +61,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         if (nextLevel > farmableZoneUpgrades.Count) return;
 
         // Effectue l'achat
-        if (eco.SafePay(farmableZoneUpgrades[nextLevel - 1].price))
+        if (eco.Pay(farmableZoneUpgrades[nextLevel - 1].price))
         {
             UpdateUI(nextLevel, farmableZoneUpgrades, farmableZoneLevelText, farmableZonePriceText, farmableZoneBuyButton);
             savesystem.farmingZoneLevel++;
@@ -78,7 +77,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         if (nextLevel > wateringCanUpgrades.Count) return;
 
         // Effectue l'achat
-        if (eco.SafePay(wateringCanUpgrades[nextLevel - 1].price))
+        if (eco.Pay(wateringCanUpgrades[nextLevel - 1].price))
         {
             UpdateUI(nextLevel, wateringCanUpgrades, wateringCanLevelText, wateringCanPriceText, wateringCanBuyButton);
             savesystem.wateringCanLevel++;
@@ -93,7 +92,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         if (nextLevel > inventorySlotUpgrades.Count) return;
 
         // Effectue l'achat
-        if (eco.SafePay(inventorySlotUpgrades[nextLevel - 1].price))
+        if (eco.Pay(inventorySlotUpgrades[nextLevel - 1].price))
         {
             UpdateUI(nextLevel, inventorySlotUpgrades, inventorySlotLevelText, inventorySlotPriceText, inventorySlotBuyButton);
             savesystem.playerInventoryLevel++;

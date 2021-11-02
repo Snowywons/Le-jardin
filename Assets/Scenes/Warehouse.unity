@@ -2322,6 +2322,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575296717}
   m_CullTransparentMesh: 1
+--- !u!1 &584536996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 584536998}
+  - component: {fileID: 584536997}
+  m_Layer: 0
+  m_Name: Economy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &584536997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584536996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3faac3d140a33684e9a5d305526c057f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balancePanelName: 
+--- !u!4 &584536998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584536996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 860, y: 640, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &600746184
 GameObject:
   m_ObjectHideFlags: 0
@@ -5552,6 +5596,7 @@ MonoBehaviour:
   inventorySlotPriceText: {fileID: 1863162384}
   inventorySlotBuyButton: {fileID: 397460834}
   balanceText: {fileID: 600746186}
+  eco: {fileID: 584536997}
 --- !u!1 &1565854631
 GameObject:
   m_ObjectHideFlags: 0
@@ -6628,8 +6673,6 @@ MonoBehaviour:
   mode: 1
   hotkey: 0
   showSlotIndex: 0
-  capacityMin: 20
-  capacityMax: 20
   canvasContentName: Warehouse Content
   slotPrefab: {fileID: 5235525739402402254, guid: 18662abc96e911b46a4fb48012650c7d, type: 3}
 --- !u!4 &2034847567
@@ -7096,8 +7139,6 @@ MonoBehaviour:
   mode: 0
   hotkey: 0
   showSlotIndex: 0
-  capacityMin: 4
-  capacityMax: 8
   canvasContentName: Inventory Content
   slotPrefab: {fileID: 5235525739402402254, guid: 18662abc96e911b46a4fb48012650c7d, type: 3}
 --- !u!4 &2068678039

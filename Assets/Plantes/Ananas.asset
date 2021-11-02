@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: Ananas
   Sprite: {fileID: 21300000, guid: 0ed189f874159954a927aed3d93722de, type: 3}
   seedSprite: {fileID: 21300000, guid: 084caaa850eff954bb0037f3b56fc313, type: 3}
-  Price: 0
+  description: 
+  Price: 1000
   maturingTime: 2
   young: {fileID: 6619077301139490207, guid: cc6b0705c18c96f498a2bb0627b03d46, type: 3}
   mature: {fileID: 6966600150289869000, guid: 0e8cee751e5976649bdb41f2bb531ec9, type: 3}

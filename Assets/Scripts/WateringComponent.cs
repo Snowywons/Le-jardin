@@ -13,6 +13,10 @@ public class WateringComponent : MonoBehaviour, IUsable
 
     Sprite InventoryItem.Sprite => Sprite;
 
+    public int BasePrice => 0;
+
+    public string Description => "";
+
     public bool Use(TileComponent tile)
     {
         if (TileComponent.tiles.Count > 0)

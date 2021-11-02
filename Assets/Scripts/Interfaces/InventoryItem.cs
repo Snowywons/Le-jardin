@@ -6,4 +6,6 @@ public interface InventoryItem
     string Name { get; }
     Sprite Sprite { get; }
     public bool Consumable { get; }
+    public int BasePrice { get; }
+    public string Description { get; }
 }

@@ -11,6 +11,10 @@ public class HarvestingComponent : MonoBehaviour, IUsable
 
     Sprite InventoryItem.Sprite => Sprite;
 
+    public int BasePrice => 0;
+
+    public string Description => "";
+
     public Sprite Sprite;
 
     public bool Use(TileComponent tile)

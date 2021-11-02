@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class EconomyComponent : MonoBehaviour
 {
-    [Header("Initial values")]
-    [SerializeField] int startBalance;
-    [SerializeField] int minBalance;
-    [SerializeField] int maxBalance;
-
+    private SaveSystemComponent savesystem;
     [Header("References")]
     [SerializeField] string balancePanelName;
 
     private GameObject balancePanel;
     private List<Text> numbers;
 
-    public int Balance { get; private set; }
+    private const int maxBalance = 999999;
+
+    public int Balance => savesystem.money;
 
     private void Start()
     {
-        Balance = startBalance;
+        savesystem = FindObjectOfType<SaveSystemComponent>();
         UpdateUI();
     }
 
@@ -68,56 +67,23 @@ public class EconomyComponent : MonoBehaviour
         if (amount < 0)
             return false;
 
-        Balance += amount;
-
-        if (Balance > maxBalance)
-            Balance = maxBalance;
+        savesystem.money = Math.Min(savesystem.money + amount, maxBalance);
+        UpdateUI();
 
         return true;
     }
 
-    // Permet d'effectuer un paiement même si notre solde ne contient pas la somme.
-    public bool UnsafePay(int amount)
-    {
-        if (amount < 0)
-            return false;
-
-        Balance -= amount;
-
-        if (Balance < minBalance)
-            Balance = minBalance;
-
-        return true;
-    }
-
+   
     // Permet d'effectuer un paiement seulement si notre solde contient la somme.
-    public bool SafePay(int amount)
+    public bool Pay(int amount)
     {
         if (amount < 0 || Balance - amount < 0)
             return false;
 
-        Balance -= amount;
+        savesystem.money -= amount;
+        UpdateUI();
 
         return true;
     }
 
-    public void Clear()
-    {
-        Balance = 0;
-    }
-
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-    }
-
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    }
-
-    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    {
-        UpdateUI();
-    }
 }

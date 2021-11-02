@@ -18,6 +18,7 @@ public class SaveSystemComponent : MonoBehaviour
     public int wateringCanLevel;
     public int farmingZoneLevel;
     public int farmingZonesUnlocked => farmingZoneLevel + 3;
+    public int money;
     string path;
 
     //Valeurs initiales
@@ -43,6 +44,7 @@ public class SaveSystemComponent : MonoBehaviour
         playerInventoryLevel = 0;
         farmingZoneLevel = 0;
         wateringCanLevel = 0;
+        money = 45000;
 
         foreach (PlantType plante in GameSystem.Instance.Plants)
         {
@@ -76,7 +78,8 @@ public class SaveSystemComponent : MonoBehaviour
                                     new JProperty("warehouse", jWarehouse),
                                     new JProperty("playerInventoryLevel", playerInventoryLevel),
                                     new JProperty("wateringCanLevel", wateringCanLevel),
-                                    new JProperty("farmingZoneLevel", farmingZoneLevel));
+                                    new JProperty("farmingZoneLevel", farmingZoneLevel),
+                                    new JProperty("money", money));
         
         using var jsonWriter = new JsonTextWriter(writer);
         jsonWriter.Formatting = Formatting.Indented;
@@ -92,6 +95,7 @@ public class SaveSystemComponent : MonoBehaviour
         playerInventoryLevel = savefile.Value<int>("playerInventoryLevel");
         wateringCanLevel = savefile.Value<int>("wateringCanLevel");
         farmingZoneLevel = savefile.Value<int>("farmingZonesUnlocked");
+        money = savefile.Value<int>("money");
         var jTiles = (JObject)savefile["tiles"];
         tiles.Clear();
         foreach(var tile in jTiles.Properties())

@@ -12,6 +12,10 @@ public class Seed : IUsable
     string InventoryItem.Name => _typePlante.name;
     Sprite InventoryItem.Sprite => _typePlante.seedSprite;
 
+    int InventoryItem.BasePrice => _typePlante.Price/2;
+
+    string InventoryItem.Description => _typePlante.description;
+
     public bool Use(TileComponent tile)
     {
         return tile.Plant(_typePlante);

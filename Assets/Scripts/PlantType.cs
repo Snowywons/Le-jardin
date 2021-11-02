@@ -7,6 +7,7 @@ public class PlantType : ScriptableObject, InventoryItem
     public string Name;
     public Sprite Sprite;
     public Sprite seedSprite;
+    public string description;
 
     public int Price;
 
@@ -20,5 +21,8 @@ public class PlantType : ScriptableObject, InventoryItem
     string InventoryItem.Name => Name;
     Sprite InventoryItem.Sprite => Sprite;
     bool InventoryItem.Consumable => true;
-   
+
+    int InventoryItem.BasePrice => Price;
+
+    string InventoryItem.Description => description;
 }
