@@ -4,22 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-[RequireComponent(typeof(Button))]
 public class MerchantItemComponent : MonoBehaviour
 {
-    private Image sprite;
+    [SerializeField] Image sprite;
+    public Text quantity;
+
     public InventoryItem item;
     public MerchantComponent merchant;
 
     private void Start()
     {
-        sprite = GetComponent<Image>();
         sprite.sprite = item.Sprite;
     }
 
     public void Click()
     {
-        merchant.OuvrirDescription(item);
+        merchant.ShowInspector(item, this);
     }
 }
