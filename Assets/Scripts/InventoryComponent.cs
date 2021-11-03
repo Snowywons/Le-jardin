@@ -146,6 +146,14 @@ public class InventoryComponent : MonoBehaviour
         {
             var slot = slots[slotIndex];
             slot.content.quantity += quantity;
+            
+
+            if (slot.content.quantity <= 0)
+            {
+                Remove(item, true);
+                return true;
+            }
+
             if (slot.content.item.Consumable)
                 slot.prefab.quantity.text = $"{slot.content.quantity}";
             else
