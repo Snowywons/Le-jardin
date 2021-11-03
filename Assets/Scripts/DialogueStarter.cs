@@ -40,4 +40,9 @@ public class DialogueStarter : MonoBehaviour
                 break;
         }
     }
+    [YarnCommand("setPanel")]
+    public void SetPanel(string panelName)
+    {
+
+    }
 }

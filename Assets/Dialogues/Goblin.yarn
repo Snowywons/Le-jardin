@@ -1,0 +1,29 @@
+﻿title: Goblin.Start
+tags:
+---
+Muhuhuhuhu, mais si ce n'est pas le nouveau petit fermier! Bienvenue, bienvenue. 
+J'ai pour toi une offre positivement alllllléchante. 
+->Miam!
+    <<setSprite Goblin happy>>
+    Je savais bien que tu y trouverais ton compte! Voici quelques 
+->Eeeeeuh?!
+    <<setSprite Goblin neutral>>
+    Mais voyons, muhuhu, je ne croque plus les petits enfants depuis longtemps, je préfère de loin les bons légumes frais.
+
+Allez hop, je suis pressé, j'ai de la mousse à aller observer et des fougères à aller flatter moi! 
+Tu veux acheter, ou tu veux vendre?
+[[Je veux acheter|Goblin.Buy]]
+[[Je veux vendre|Goblin.Sell]]
+===
+title: Goblin.Buy
+tags:
+---
+Ahhh, tu as besoins de graines? Si tu promets de ne pas marcher sur les pissenlits, je te fais un bon prix!
+
+===
+title: Goblin.Sell
+tags:
+---
+J'ai entendu dire que tu avais de bon légumes frais pour moi, omnomnomnom.
+S
+===
