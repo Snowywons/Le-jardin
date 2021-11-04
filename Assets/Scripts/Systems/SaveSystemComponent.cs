@@ -94,7 +94,7 @@ public class SaveSystemComponent : MonoBehaviour
         JObject savefile = JObject.Load(jsonReader);
         playerInventoryLevel = savefile.Value<int>("playerInventoryLevel");
         wateringCanLevel = savefile.Value<int>("wateringCanLevel");
-        farmingZoneLevel = savefile.Value<int>("farmingZonesUnlocked");
+        farmingZoneLevel = savefile.Value<int>("farmingZoneLevel");
         money = savefile.Value<int>("money");
         var jTiles = (JObject)savefile["tiles"];
         tiles.Clear();

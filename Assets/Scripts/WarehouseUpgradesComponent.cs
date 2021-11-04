@@ -65,6 +65,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         {
             UpdateUI(nextLevel, farmableZoneUpgrades, farmableZoneLevelText, farmableZonePriceText, farmableZoneBuyButton);
             savesystem.farmingZoneLevel++;
+            Debug.Log("level " + savesystem.farmingZoneLevel);
 
         }
     }
