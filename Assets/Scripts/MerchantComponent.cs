@@ -20,13 +20,18 @@ public class MerchantComponent : MonoBehaviour
     [SerializeField] Vector2 selectedButtonSize;
 
     [HideInInspector] public bool isSelling;
-    private const float sellingPriceFactor = 0.50f;
+    private const float sellingPriceFactor = 0.50f; // Normal Day. Revendu à 50% de son prix de base
+
+    private const float sellingDiscountFactor = 0.65f; // Discount Day. Revendu à 65% de son prix de base
+    private const float buyingDiscountFactor = 0.75f; // Discount Day. Acheté à 75% de son prix de base
 
     private SaveSystemComponent savesystem;
+    private DiscountComponent discountComponent;
 
     void Start()
     {
         savesystem = FindObjectOfType<SaveSystemComponent>();
+        discountComponent = FindObjectOfType<DiscountComponent>();
         inspectorPanel.merchant = this;
         initButtonSize = new Vector2(buyTabRect.rect.width, buyTabRect.rect.height);
         buyTabRect.sizeDelta = selectedButtonSize;
@@ -71,7 +76,29 @@ public class MerchantComponent : MonoBehaviour
         return false;
     }
 
-    public int CalculateUnitPrice(InventoryItem item) => isSelling ? (int)(item.BasePrice * sellingPriceFactor) : item.BasePrice;
+    public int CalculateUnitPrice(InventoryItem item)
+    {
+        int day = GameSystem.Instance.Clock.GetDay() - 1;
+        var discount = discountComponent.discountsList.Where(d => d.day == day).FirstOrDefault();
+
+        // S'il s'agit d'une journée spéciale
+        if (discount != null)
+        {
+            // Si le joueur est en mode VENTE
+            if (isSelling)
+            {
+                return (int)(item.BasePrice * sellingDiscountFactor);
+            }
+            // Si le joueur est en mode ACHAT
+            else
+            {
+                return (int)(item.BasePrice * buyingDiscountFactor);
+            }
+        }
+
+        // S'il ne s'agit PAS d'une journée spéciale
+        return isSelling ? (int)(item.BasePrice * sellingPriceFactor) : item.BasePrice;
+    }
 
     public void ShowInspector(InventoryItem item, MerchantItemComponent merchantItem)
     {

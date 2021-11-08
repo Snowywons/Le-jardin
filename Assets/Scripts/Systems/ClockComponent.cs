@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using System.Collections.Generic;
 
 enum Days
 {
@@ -45,6 +47,12 @@ public class ClockComponent : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            NextDay();
+            return;
+        }
+
         if (!isPaused)
         {
             float t = daySpeed * Time.deltaTime;
@@ -91,7 +99,7 @@ public class ClockComponent : MonoBehaviour
     private void UpdateDayText()
     {
         int day = GetDay();
-        dayText.text = $"{Enum.GetName(typeof(Days), day % 7).Substring(0, 3)}. {day}";
+        dayText.text = $"{Enum.GetName(typeof(Days), (day - 1) % 7).Substring(0, 3)}. {day}";
     }
 
     private void UpdateArrowIndicator()
@@ -103,12 +111,11 @@ public class ClockComponent : MonoBehaviour
     public void SetPause(bool pause)
     {
         isPaused = pause;
-
     }
 
     public void NextDay()
     {
-        time = ((int)time / duration) * duration;
+        time = GetDay() * duration;
         currentDayTime = 0;
 
         UpdateDayText();
@@ -130,12 +137,10 @@ public class ClockComponent : MonoBehaviour
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        ready = false;
-        FindReferences();
-        Debug.Log(ready);
+        ready = FindReferences();
     }
 
-    private void FindReferences()
+    private bool FindReferences()
     {
         GameObject obj = GameObject.Find(timeTextName);
         timeText = obj ? obj.GetComponent<Text>() : null;
@@ -146,6 +151,6 @@ public class ClockComponent : MonoBehaviour
         obj = GameObject.Find(arrowIndicatorName);
         arrowIndicator = obj ? obj.GetComponent<Image>() : null;
 
-        ready = timeText && dayText && arrowIndicator;
+        return timeText && dayText && arrowIndicator;
     }
 }
