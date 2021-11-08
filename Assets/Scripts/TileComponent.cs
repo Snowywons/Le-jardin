@@ -155,8 +155,6 @@ public class TileComponent : MonoBehaviour
 
     public void OnDayAdvance()
     {
-        Debug.Log("advance");
-        
         if (isWet)
         {
             GetComponent<MeshRenderer>().material = dryMaterial;
@@ -166,8 +164,8 @@ public class TileComponent : MonoBehaviour
                 SetAge(age+1);                
             }
         }
-        SaveTile();
 
+        SaveTile();
     }
 
     public void Update()
