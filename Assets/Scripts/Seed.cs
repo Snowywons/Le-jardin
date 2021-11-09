@@ -18,7 +18,12 @@ public class Seed : IUsable
 
     public bool Use(TileComponent tile)
     {
-        return tile.Plant(_typePlante);
+        if (tile.Plant(_typePlante)) 
+        {
+            GameSystem.Instance.seedSound.Play();
+            return true;
+        }
+        return false;
     }
 
     public Seed(PlantType typePlante)

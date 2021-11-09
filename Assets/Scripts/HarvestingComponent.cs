@@ -17,8 +17,11 @@ public class HarvestingComponent : MonoBehaviour, IUsable
 
     public Sprite Sprite;
 
+    public AudioSource soundEffect;
+
     public bool Use(TileComponent tile)
     {
+        soundEffect.Play();
         return tile.Harvest();
     }
 }

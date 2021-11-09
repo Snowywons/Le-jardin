@@ -17,6 +17,8 @@ public class WateringComponent : MonoBehaviour, IUsable
 
     public string Description => "";
 
+    public AudioSource soundEffect;
+
     public bool Use(TileComponent tile)
     {
         if (TileComponent.tiles.Count > 0)
@@ -29,6 +31,7 @@ public class WateringComponent : MonoBehaviour, IUsable
             tile.SetWet();
         }
 
+        soundEffect.Play();
         return true;
     }
 }

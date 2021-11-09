@@ -12,6 +12,8 @@ public enum GameState
 public class GameSystem : MonoBehaviour
 {
     public static GameSystem Instance { get; private set; }
+    public AudioSource seedSound;
+
     public InventoryComponent PlayerInventory
     {
         get

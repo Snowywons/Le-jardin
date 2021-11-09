@@ -32,6 +32,10 @@ public class WarehouseUpgradesComponent : MonoBehaviour
     private GameSystem gs;
     public EconomyComponent eco;
 
+    public AudioSource sawSound;
+    public AudioSource metalSound;
+    public AudioSource shovelSound;
+
     private void Start()
     {
         gs = GameSystem.Instance;
@@ -65,7 +69,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         {
             UpdateUI(nextLevel, farmableZoneUpgrades, farmableZoneLevelText, farmableZonePriceText, farmableZoneBuyButton);
             savesystem.farmingZoneLevel++;
-            Debug.Log("level " + savesystem.farmingZoneLevel);
+            shovelSound.Play();
 
         }
     }
@@ -82,6 +86,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
         {
             UpdateUI(nextLevel, wateringCanUpgrades, wateringCanLevelText, wateringCanPriceText, wateringCanBuyButton);
             savesystem.wateringCanLevel++;
+            metalSound.Play();
         }
     }
 
@@ -98,6 +103,7 @@ public class WarehouseUpgradesComponent : MonoBehaviour
             UpdateUI(nextLevel, inventorySlotUpgrades, inventorySlotLevelText, inventorySlotPriceText, inventorySlotBuyButton);
             savesystem.playerInventoryLevel++;
             gs.PlayerInventory.Expand();
+            sawSound.Play();
         }
     }
 
