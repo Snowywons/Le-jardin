@@ -41,7 +41,10 @@ public class GameSystem : MonoBehaviour
     private InventoryComponent warehouseInventory;
 
     [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject congratulationsPanel;
     [SerializeField] List<PlantType> plants;
+
+    public bool isGameOver;
 
     public Dictionary<string, InventoryItem> itemDB;
 
@@ -71,9 +74,10 @@ public class GameSystem : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
             TogglePause();
-        }
+
+        if (Clock.GetDay() > 31)
+            GameIsOver();
     }
 
     private void TogglePause()
@@ -105,5 +109,13 @@ public class GameSystem : MonoBehaviour
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         //ResetInitValues();
+    }
+
+    private void GameIsOver()
+    {
+        congratulationsPanel.SetActive(true);
+        isGameOver = true;
+        Clock.SetPause(true);
+        State = GameState.Pause;
     }
 }

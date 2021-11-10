@@ -10,6 +10,8 @@ public class SceneNavigatorComponent : MonoBehaviour
     public const int WORLD = 0;
     public const int WAREHOUSE = 1;
 
+    private bool isLoading;
+
     public void Load(int sceneId)
     {
         FindObjectOfType<SaveSystemComponent>().Save();
@@ -20,17 +22,27 @@ public class SceneNavigatorComponent : MonoBehaviour
     {
         yield return null;
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneId);
-        asyncLoad.allowSceneActivation = false;
-
-        while (!asyncLoad.isDone)
+        if (!isLoading)
         {
-            if (asyncLoad.progress >= 0.9f)
-            {
-                asyncLoad.allowSceneActivation = true;
-            }
+            isLoading = true;
 
-            yield return null;
+            FadeInOutComponent fadeInOutComponent = FindObjectOfType<FadeInOutComponent>();
+            fadeInOutComponent.StopAllCoroutines();
+            StartCoroutine(fadeInOutComponent.FadeIn());
+            yield return new WaitForSeconds(0.6f);
+
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneId);
+            asyncLoad.allowSceneActivation = false;
+
+            while (!asyncLoad.isDone)
+            {
+                if (asyncLoad.progress >= 0.9f)
+                {
+                    asyncLoad.allowSceneActivation = true;
+                }
+
+                yield return null;
+            }
         }
     }
 

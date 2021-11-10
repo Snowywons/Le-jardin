@@ -38,7 +38,7 @@ public class DiscountComponent : MonoBehaviour
 
             PlantType plant = plantTypes.ElementAt(UnityEngine.Random.Range(0, plantTypes.Count));
 
-            discountsList.Add(new Discount(day, DiscountType.Plant, plant.Sprite));
+            discountsList.Add(new Discount(day, DiscountType.Plant, plant.Sprite, plant));
         }
 
         int goblinDaysCount = UnityEngine.Random.Range(minGoblinDaysCount, maxGoblinDaysCount);
@@ -65,11 +65,13 @@ public class Discount
     public int day;
     public DiscountType discountType;
     public Sprite sprite;
+    public PlantType plantType;
 
-    public Discount(int day, DiscountType discountType, Sprite sprite)
+    public Discount(int day, DiscountType discountType, Sprite sprite, PlantType plantType = null)
     {
         this.day = day;
         this.discountType = discountType;
         this.sprite = sprite;
+        this.plantType = plantType;
     }
 }

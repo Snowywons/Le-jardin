@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 enum Days
 {
@@ -39,6 +40,8 @@ public class ClockComponent : MonoBehaviour
 
     private bool ready;
 
+    [HideInInspector] public UnityEvent eventsOnNextDay = new UnityEvent();
+
     private void Start()
     {
         duration = (dayEndAt - dayStartAt) * (60 * 60);
@@ -63,6 +66,7 @@ public class ClockComponent : MonoBehaviour
         if (ready == false)
             return;
 
+        UpdateDayText();
         UpdateTimeText();
         UpdateArrowIndicator();
 
@@ -99,6 +103,8 @@ public class ClockComponent : MonoBehaviour
     private void UpdateDayText()
     {
         int day = GetDay();
+        if (day > 31) return;
+
         dayText.text = $"{Enum.GetName(typeof(Days), (day - 1) % 7).Substring(0, 3)}. {day}";
     }
 
@@ -117,11 +123,12 @@ public class ClockComponent : MonoBehaviour
     {
         time = GetDay() * duration;
         currentDayTime = 0;
+        eventsOnNextDay?.Invoke();
 
         UpdateDayText();
     }
 
-    public int GetDay() => ((int)time / duration) + 1;
+    public int GetDay() => duration > 0 ? ((int)time / duration) + 1 : (int)time;
 
     public float GetTime() => time;
 

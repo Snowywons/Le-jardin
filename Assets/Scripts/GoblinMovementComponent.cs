@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 enum Direction
 {
@@ -19,9 +20,14 @@ public class GoblinMovementComponent : MonoBehaviour
     private float yRotation;
     private float initYRotation;
 
+    private DiscountComponent discountComponent;
+
     private void Start()
     {
         initYRotation = transform.rotation.eulerAngles.y;
+        GameSystem.Instance.Clock.eventsOnNextDay.AddListener(Appear);
+        discountComponent = FindObjectOfType<DiscountComponent>();
+        Appear();
     }
 
     private IEnumerator Walk()
@@ -61,9 +67,20 @@ public class GoblinMovementComponent : MonoBehaviour
         isWalking = false;
     }
 
-    public void ToggleAppear()
+    public void Appear()
     {
-        if (!isWalking)
-            StartCoroutine(Walk());
+        int day = GameSystem.Instance.Clock.GetDay() - 1;
+        var discount = discountComponent.discountsList.Where(d => d.day == day).FirstOrDefault();
+
+        if (discount != null && discount.discountType.Equals(DiscountType.Goblin))
+        {
+            if (direction.Equals(Direction.North) && !isWalking)
+                StartCoroutine(Walk());
+        }
+        else
+        {
+            if (direction.Equals(Direction.South) && !isWalking)
+                StartCoroutine(Walk());
+        }
     }
 }

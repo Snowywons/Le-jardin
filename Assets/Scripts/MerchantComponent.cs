@@ -5,6 +5,12 @@ using System.Linq;
 
 public class MerchantComponent : MonoBehaviour
 {
+    private enum Market
+    {
+        Public,
+        Goblin
+    }
+
     public List<PlantType> stock;
 
     public EconomyComponent balance;
@@ -24,9 +30,12 @@ public class MerchantComponent : MonoBehaviour
 
     private const float sellingDiscountFactor = 0.65f; // Discount Day. Revendu à 65% de son prix de base
     private const float buyingDiscountFactor = 0.75f; // Discount Day. Acheté à 75% de son prix de base
+    private const float goblinSellingDiscountFactor = 0.90f; // Goblin Discount Day. Revendu à 90% de son prix de base
 
     private SaveSystemComponent savesystem;
     private DiscountComponent discountComponent;
+
+    private Market market;
 
     void Start()
     {
@@ -87,12 +96,41 @@ public class MerchantComponent : MonoBehaviour
             // Si le joueur est en mode VENTE
             if (isSelling)
             {
-                return (int)(item.BasePrice * sellingDiscountFactor);
+                // Si c'est une journée spéciale de PLANTE
+                if (discount.discountType.Equals(DiscountType.Plant))
+                {
+                    // Si c'est la plante en rabais, alors il y a un discount sur la vente
+                    if (discount.plantType != null &&
+                        (discount.plantType.ID == item.ID || "seed_" + discount.plantType.ID == item.ID))
+                    {
+                        return (int)(item.BasePrice * sellingDiscountFactor);
+                    }
+                    // Si ce n'est pas la plante en rabais, alors aucun discount sur la vente
+                    else
+                    {
+                        return (int)(item.BasePrice * sellingPriceFactor);
+                    }
+                }
+                // Si c'est une journée spéciale du GOBLIN
+                else if (market.Equals(Market.Goblin))
+                {
+                    return (int)(item.BasePrice * goblinSellingDiscountFactor);
+                }
             }
             // Si le joueur est en mode ACHAT
             else
             {
-                return (int)(item.BasePrice * buyingDiscountFactor);
+                // Si c'est la plante en rabais, alors il y a un discount sur l'achat
+                if (discount.plantType != null &&
+                    (discount.plantType.ID == item.ID || "seed_" + discount.plantType.ID == item.ID))
+                {
+                    return (int)(item.BasePrice * buyingDiscountFactor);
+                }
+                // Si ce n'est pas la plante en rabais, alors aucun discount sur l'achat
+                else
+                {
+                    return item.BasePrice;
+                }
             }
         }
 
@@ -159,5 +197,15 @@ public class MerchantComponent : MonoBehaviour
         }
 
         inspectorPanel.gameObject.SetActive(false);
+    }
+
+    public void PublicMarketSelected()
+    {
+        market = Market.Public;
+    }
+
+    public void GoblinMarketSelected()
+    {
+        market = Market.Goblin;
     }
 }

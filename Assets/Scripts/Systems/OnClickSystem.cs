@@ -5,7 +5,7 @@ public class OnClickSystem : MonoBehaviour
 {
     [SerializeField] Camera cam;
     [SerializeField] string cameraName = "Main Camera";
-    public bool enabled = true;
+    public new bool enabled = true;
 
     private void Start()
     {

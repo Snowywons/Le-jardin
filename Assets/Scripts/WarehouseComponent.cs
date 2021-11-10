@@ -27,6 +27,7 @@ public class WarehouseComponent : MonoBehaviour
     {
         GameSystem.Instance.Clock.SetPause(true);
         GameSystem.Instance.PlayerInventory.RecycleAll();
+        FindObjectOfType<SceneNavigatorComponent>().Load(1);
     }
 
     public void Exit()
@@ -34,5 +35,6 @@ public class WarehouseComponent : MonoBehaviour
         GameSystem.Instance.Clock.SetPause(false);
         GameSystem.Instance.PlayerInventory.RecycleAll();
         GameSystem.Instance.WarehouseInventory.RecycleAll();
+        FindObjectOfType<SceneNavigatorComponent>().Load(0);
     }
 }
