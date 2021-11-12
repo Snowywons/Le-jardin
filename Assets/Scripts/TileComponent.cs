@@ -23,6 +23,8 @@ public class TileComponent : MonoBehaviour
 
     private void Start()
     {
+        GameSystem.Instance.Clock.eventsOnNextDay.AddListener(OnDayAdvance);
+
         savesystem = FindObjectOfType<SaveSystemComponent>();
         isFarmable = zoneId <= savesystem.farmingZonesUnlocked;
 
@@ -166,14 +168,6 @@ public class TileComponent : MonoBehaviour
         }
 
         SaveTile();
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            OnDayAdvance();
-        }
     }
 
     void OnMouseEnter()

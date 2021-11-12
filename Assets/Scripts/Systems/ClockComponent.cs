@@ -35,6 +35,7 @@ public class ClockComponent : MonoBehaviour
     private int duration;
     private float time;
     private float currentDayTime;
+    private int currentDay = 1;
 
     private bool isPaused;
 
@@ -50,28 +51,28 @@ public class ClockComponent : MonoBehaviour
 
     private void Update()
     {
+        if (isPaused || !ready) return;
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            currentDay = 31;
             NextDay();
             return;
         }
 
-        if (!isPaused)
-        {
-            float t = daySpeed * Time.deltaTime;
-            currentDayTime += t;
-            time += t;
-        }
+        float t = daySpeed * Time.deltaTime;
+        currentDayTime += t;
+        time += t;
 
-        if (ready == false)
+        if (currentDayTime >= duration)
+        {
+            NextDay();
             return;
+        }
 
         UpdateDayText();
         UpdateTimeText();
         UpdateArrowIndicator();
-
-        if (currentDayTime >= duration)
-            NextDay();
     }
 
     private void UpdateTimeText()
@@ -121,14 +122,16 @@ public class ClockComponent : MonoBehaviour
 
     public void NextDay()
     {
-        time = GetDay() * duration;
+        time = ++currentDay * duration;
         currentDayTime = 0;
         eventsOnNextDay?.Invoke();
-
-        UpdateDayText();
+        SetPause(true);
+        if (currentDay < 31)
+            FindObjectOfType<SceneNavigatorComponent>().Load(1);
     }
 
-    public int GetDay() => duration > 0 ? ((int)time / duration) + 1 : (int)time;
+    //public int GetDay() => duration > 0 ? ((int)time / duration) + 1 : (int)time;
+    public int GetDay() => currentDay;
 
     public float GetTime() => time;
 
