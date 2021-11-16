@@ -85,6 +85,7 @@ public class TileComponent : MonoBehaviour
 
         if (GameSystem.Instance.PlayerInventory.Update(item, 1))
         {
+            GameSystem.Instance.AddScorePoints(plante.scorePoints);
             TileReset();
             return true;
         }

@@ -10,6 +10,7 @@ public class PlantType : ScriptableObject, InventoryItem
     public string description;
 
     public int Price;
+    public int scorePoints;
 
     [Header("Plant properties")]
     public int maturingTime;

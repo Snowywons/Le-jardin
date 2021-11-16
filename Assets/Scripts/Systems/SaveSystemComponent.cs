@@ -21,6 +21,7 @@ public class SaveSystemComponent : MonoBehaviour
     public int wateringCanLevel;
     public int farmingZoneLevel;
     public int farmingZonesUnlocked => farmingZoneLevel + 3;
+    public int scorePoints;
     public int money;
     public float currentDayTime;
     public int currentDay;
@@ -82,6 +83,7 @@ public class SaveSystemComponent : MonoBehaviour
         playerInventoryLevel = 0;
         farmingZoneLevel = 0;
         wateringCanLevel = 0;
+        scorePoints = 0;
         money = 45000;
         currentDay = 1;
         currentDayTime = 0;
@@ -120,6 +122,7 @@ public class SaveSystemComponent : MonoBehaviour
                                     new JProperty("playerInventoryLevel", playerInventoryLevel),
                                     new JProperty("wateringCanLevel", wateringCanLevel),
                                     new JProperty("farmingZoneLevel", farmingZoneLevel),
+                                    new JProperty("scorePoints", scorePoints),
                                     new JProperty("money", money),
                                     new JProperty("currentDay", currentDay),
                                     new JProperty("currentDayTime", currentDayTime),
@@ -141,6 +144,7 @@ public class SaveSystemComponent : MonoBehaviour
         playerInventoryLevel = savefile.Value<int>("playerInventoryLevel");
         wateringCanLevel = savefile.Value<int>("wateringCanLevel");
         farmingZoneLevel = savefile.Value<int>("farmingZoneLevel");
+        scorePoints = savefile.Value<int>("scorePoints");
         money = savefile.Value<int>("money");
         currentDay = savefile.Value<int>("currentDay");
         currentDayTime = savefile.Value<float>("currentDayTime");

@@ -16,8 +16,9 @@ MonoBehaviour:
   Name: Oignon
   Sprite: {fileID: 21300000, guid: 843d22172ce6982428afa539e3d5f929, type: 3}
   seedSprite: {fileID: 21300000, guid: 1b41e2b462222284a8cee9708ea32566, type: 3}
-  description: Mature en deux jours
+  description: Mature en deux jours et rapporte 20 points.
   Price: 200
+  scorePoints: 20
   maturingTime: 2
   young: {fileID: 6619077301139490207, guid: cc6b0705c18c96f498a2bb0627b03d46, type: 3}
   mature: {fileID: 4442874107585355240, guid: 4cbdafdaea93db34d9a1c879f722fc0e, type: 3}

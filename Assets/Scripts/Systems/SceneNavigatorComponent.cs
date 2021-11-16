@@ -5,11 +5,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum LevelName
+{
+    MENU,
+    WORLD,
+    WAREHOUSE
+}
+
 public class SceneNavigatorComponent : MonoBehaviour
 {
-    public const int MENU = 0;
-    public const int WORLD = 1;
-    public const int WAREHOUSE = 2;
+    public const int MENU = (int)LevelName.MENU;
+    public const int WORLD = (int)LevelName.WORLD;
+    public const int WAREHOUSE = (int)LevelName.WAREHOUSE;
 
     private bool isLoading;
 
