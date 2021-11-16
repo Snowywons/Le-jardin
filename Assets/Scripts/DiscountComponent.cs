@@ -25,28 +25,30 @@ public class DiscountComponent : MonoBehaviour
 
     private void Randomize()
     {
-        SaveSystemComponent save = FindObjectOfType<SaveSystemComponent>();
+        
+        SaveSystemComponent savesystem = FindObjectOfType<SaveSystemComponent>();
+        var rando = new System.Random(savesystem.randomSeed);
         List<int> allDays = Enumerable.Range(1, 31).ToList();
-        List<PlantType> plantTypes = save.plants;
+        List<PlantType> plantTypes = savesystem.plants;
 
-        int discountsCount = UnityEngine.Random.Range(minDiscountsCount, maxDiscountsCount);
+        int discountsCount = rando.Next(minDiscountsCount, maxDiscountsCount);
 
         for (int i = 0; i < discountsCount; i++)
         {
-            int n = UnityEngine.Random.Range(0, allDays.Count);
+            int n = rando.Next(0, allDays.Count);
             int day = allDays.ElementAt(n);
             allDays.RemoveAt(n);
 
-            PlantType plant = plantTypes.ElementAt(UnityEngine.Random.Range(0, plantTypes.Count));
+            PlantType plant = plantTypes.ElementAt(rando.Next(0, plantTypes.Count));
 
             discountsList.Add(new Discount(day, DiscountType.Plant, plant.Sprite, plant));
         }
 
-        int goblinDaysCount = UnityEngine.Random.Range(minGoblinDaysCount, maxGoblinDaysCount);
+        int goblinDaysCount = rando.Next(minGoblinDaysCount, maxGoblinDaysCount);
 
         for (int i = 0; i < goblinDaysCount; i++)
         {
-            int n = UnityEngine.Random.Range(0, allDays.Count);
+            int n = rando.Next(0, allDays.Count);
             int day = allDays.ElementAt(n);
             allDays.RemoveAt(n);
 

@@ -32,10 +32,10 @@ public class ClockComponent : MonoBehaviour
     private Text dayText;
     private Image arrowIndicator;
 
+    private SaveSystemComponent savesystem;
+
     private int duration;
     private float time;
-    private float currentDayTime;
-    private int currentDay = 1;
 
     private bool isPaused;
 
@@ -45,6 +45,7 @@ public class ClockComponent : MonoBehaviour
 
     private void Start()
     {
+        savesystem = FindObjectOfType<SaveSystemComponent>();
         duration = (dayEndAt - dayStartAt) * (60 * 60);
         UpdateDayText();
     }
@@ -55,16 +56,16 @@ public class ClockComponent : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            currentDay = 31;
+            savesystem.currentDay = 31;
             NextDay();
             return;
         }
 
         float t = daySpeed * Time.deltaTime;
-        currentDayTime += t;
+        savesystem.currentDayTime += t;
         time += t;
 
-        if (currentDayTime >= duration)
+        if (savesystem.currentDayTime >= duration)
         {
             NextDay();
             return;
@@ -77,8 +78,8 @@ public class ClockComponent : MonoBehaviour
 
     private void UpdateTimeText()
     {
-        int hours = (int)currentDayTime / (60 * 60) + dayStartAt;
-        int minutes = ((int)currentDayTime / 60) % 60;
+        int hours = (int)savesystem.currentDayTime / (60 * 60) + dayStartAt;
+        int minutes = ((int)savesystem.currentDayTime / 60) % 60;
 
         timeText.text = $"{hours}:";
 
@@ -111,7 +112,7 @@ public class ClockComponent : MonoBehaviour
 
     private void UpdateArrowIndicator()
     {
-        Vector3 angle = new Vector3(0, 0, 90 - (currentDayTime % duration) * 180 / duration);
+        Vector3 angle = new Vector3(0, 0, 90 - (savesystem.currentDayTime % duration) * 180 / duration);
         arrowIndicator.transform.rotation = Quaternion.Euler(angle);
     }
 
@@ -122,16 +123,17 @@ public class ClockComponent : MonoBehaviour
 
     public void NextDay()
     {
-        time = ++currentDay * duration;
-        currentDayTime = 0;
+        time = ++savesystem.currentDay * duration;
+        savesystem.currentDayTime = 0;
         eventsOnNextDay?.Invoke();
         SetPause(true);
-        if (currentDay < 31)
-            FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WAREHOUSE);
+        if (savesystem.currentDay < 31) {
+            Debug.Log("Load Warehouse");
+            FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WAREHOUSE); }
     }
 
     //public int GetDay() => duration > 0 ? ((int)time / duration) + 1 : (int)time;
-    public int GetDay() => currentDay;
+    public int GetDay() => savesystem.currentDay;
 
     public float GetTime() => time;
 

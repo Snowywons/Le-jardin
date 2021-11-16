@@ -13,7 +13,7 @@ public class SaveSystemComponent : MonoBehaviour
     public Dictionary<int, SavedItem> warehouseInventory = new Dictionary<int, SavedItem>();
     public List<PlantType> plants;
     public Dictionary<string, InventoryItem> itemDB;
-
+    public int randomSeed;
 
     public int playerInventoryLevel;
     public int playerInventoryCapacity => playerInventoryLevel + 4;
@@ -22,6 +22,8 @@ public class SaveSystemComponent : MonoBehaviour
     public int farmingZoneLevel;
     public int farmingZonesUnlocked => farmingZoneLevel + 3;
     public int money;
+    public float currentDayTime;
+    public int currentDay;
     string path;
 
     //Valeurs initiales
@@ -57,7 +59,7 @@ public class SaveSystemComponent : MonoBehaviour
             NewGame();
             Save();
         }
-        FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WAREHOUSE);
+        FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WORLD);
     }
 
     public bool GameExists(int slot)
@@ -72,6 +74,7 @@ public class SaveSystemComponent : MonoBehaviour
 
     private void NewGame()
     {
+        var rando = new System.Random();
         playerInventory.Clear();
         warehouseInventory.Clear();
         playerInventory.Add(playerInventory.Count, new SavedItem { item = FindObjectOfType<WateringComponent>(), quantity = -1 });
@@ -80,6 +83,9 @@ public class SaveSystemComponent : MonoBehaviour
         farmingZoneLevel = 0;
         wateringCanLevel = 0;
         money = 45000;
+        currentDay = 1;
+        currentDayTime = 0;
+        randomSeed = rando.Next();
 
         foreach (PlantType plante in plants)
         {
@@ -114,7 +120,11 @@ public class SaveSystemComponent : MonoBehaviour
                                     new JProperty("playerInventoryLevel", playerInventoryLevel),
                                     new JProperty("wateringCanLevel", wateringCanLevel),
                                     new JProperty("farmingZoneLevel", farmingZoneLevel),
-                                    new JProperty("money", money));
+                                    new JProperty("money", money),
+                                    new JProperty("currentDay", currentDay),
+                                    new JProperty("currentDayTime", currentDayTime),
+                                    new JProperty("randomSeed", randomSeed));
+
         
         using var jsonWriter = new JsonTextWriter(writer);
         jsonWriter.Formatting = Formatting.Indented;
@@ -132,6 +142,9 @@ public class SaveSystemComponent : MonoBehaviour
         wateringCanLevel = savefile.Value<int>("wateringCanLevel");
         farmingZoneLevel = savefile.Value<int>("farmingZoneLevel");
         money = savefile.Value<int>("money");
+        currentDay = savefile.Value<int>("currentDay");
+        currentDayTime = savefile.Value<float>("currentDayTime");
+        randomSeed = savefile.Value<int>("randomSeed");
         var jTiles = (JObject)savefile["tiles"];
         tiles.Clear();
         foreach(var tile in jTiles.Properties())

@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5803922, g: 0.40784317, b: 0.3019608, a: 1}
+  m_Color: {r: 0.6039216, g: 0.42352945, b: 0.3137255, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2675,6 +2675,8 @@ MonoBehaviour:
   wateringCanLevel: 0
   farmingZoneLevel: 0
   money: 0
+  currentDayTime: 0
+  currentDay: 0
 --- !u!4 &1121618358
 Transform:
   m_ObjectHideFlags: 0

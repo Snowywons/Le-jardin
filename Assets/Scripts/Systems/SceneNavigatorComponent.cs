@@ -44,6 +44,8 @@ public class SceneNavigatorComponent : MonoBehaviour
 
                 yield return null;
             }
+
+            isLoading = false;
         }
     }
 
