@@ -33,7 +33,6 @@ public class GameSystem : MonoBehaviour
         }
     }
     public ClockComponent Clock { get; private set; }
-    public List<PlantType> Plants { get; private set; }
     public GameState State { get; private set; }
 
     [SerializeField] ClockComponent clock;
@@ -42,11 +41,9 @@ public class GameSystem : MonoBehaviour
 
     [SerializeField] GameObject pausePanel;
     [SerializeField] GameObject congratulationsPanel;
-    [SerializeField] List<PlantType> plants;
 
     public bool isGameOver;
 
-    public Dictionary<string, InventoryItem> itemDB;
 
     private void Awake()
     {
@@ -54,20 +51,7 @@ public class GameSystem : MonoBehaviour
         {
             Instance = GetComponent<GameSystem>();
             Clock = clock;
-            Plants = plants;
-            itemDB = new Dictionary<string, InventoryItem>();
-            foreach(var plant in Plants)
-            {
-                itemDB.Add(plant.ID, plant);
-                var seed = new Seed(plant);
-                itemDB.Add(seed.ID, seed);
-            }
-            var wateringCan = FindObjectOfType<WateringComponent>();
-            itemDB.Add(wateringCan.ID, wateringCan);
-            var shovel = FindObjectOfType<HarvestingComponent>();
-            itemDB.Add(shovel.ID, shovel);
-            var saveSystem = FindObjectOfType<SaveSystemComponent>();
-            saveSystem.Initialize();
+           
         }
     }
 

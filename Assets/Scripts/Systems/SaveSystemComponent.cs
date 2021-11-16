@@ -4,14 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-
-
+using UnityEngine.SceneManagement;
 
 public class SaveSystemComponent : MonoBehaviour
 {
     public Dictionary<string, TileInfo> tiles = new Dictionary<string, TileInfo>();
     public Dictionary<int, SavedItem> playerInventory = new Dictionary<int, SavedItem>();
     public Dictionary<int, SavedItem> warehouseInventory = new Dictionary<int, SavedItem>();
+    public List<PlantType> plants;
+    public Dictionary<string, InventoryItem> itemDB;
+
+
     public int playerInventoryLevel;
     public int playerInventoryCapacity => playerInventoryLevel + 4;
     public int warehouseInventoryCapacity => 20;
@@ -22,9 +25,29 @@ public class SaveSystemComponent : MonoBehaviour
     string path;
 
     //Valeurs initiales
-    public void Initialize()
+    public void Awake()
     {
-        path = Path.Combine(Application.persistentDataPath, "savefile.txt");
+        itemDB = new Dictionary<string, InventoryItem>();
+        foreach (var plant in plants)
+        {
+            itemDB.Add(plant.ID, plant);
+            var seed = new Seed(plant);
+            itemDB.Add(seed.ID, seed);
+        }
+        var wateringCan = FindObjectOfType<WateringComponent>();
+        itemDB.Add(wateringCan.ID, wateringCan);
+        var shovel = FindObjectOfType<HarvestingComponent>();
+        itemDB.Add(shovel.ID, shovel); 
+        
+    }
+    public string GetPath(int slot)
+    {
+        return Path.Combine(Application.persistentDataPath, $"savefile{slot}.txt");
+    }
+
+    public void StartGame(int slot)
+    {
+        path = GetPath(slot);
         try
         {
             Load();
@@ -32,7 +55,19 @@ public class SaveSystemComponent : MonoBehaviour
         catch (IOException)
         {
             NewGame();
+            Save();
         }
+        FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WAREHOUSE);
+    }
+
+    public bool GameExists(int slot)
+    {
+        return File.Exists(GetPath(slot));
+    }
+
+    public void DeleteGame(int slot)
+    {
+        File.Delete(GetPath(slot));
     }
 
     private void NewGame()
@@ -46,7 +81,7 @@ public class SaveSystemComponent : MonoBehaviour
         wateringCanLevel = 0;
         money = 45000;
 
-        foreach (PlantType plante in GameSystem.Instance.Plants)
+        foreach (PlantType plante in plants)
         {
             if (playerInventory.Count < playerInventoryCapacity)
                 playerInventory.Add(playerInventory.Count, new SavedItem { item = new Seed(plante), quantity = 2 });
@@ -85,6 +120,7 @@ public class SaveSystemComponent : MonoBehaviour
         jsonWriter.Formatting = Formatting.Indented;
         saveFile.WriteTo(jsonWriter);
     }
+
     public void Load()
     {
         using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
@@ -103,13 +139,14 @@ public class SaveSystemComponent : MonoBehaviour
             var tileValue = tile.Value;
             var plantID = tileValue.Value<string>("plant");
             var tileInfo = new TileInfo(tileValue.Value<bool>("isWet"),
-                                        plantID != null?(PlantType)GameSystem.Instance.itemDB[plantID]: null,
+                                        plantID != null?(PlantType)itemDB[plantID]: null,
                                         tileValue.Value<int>("age"));
             tiles[tile.Name] = tileInfo;
         }
         DeserializeInventory((JObject)savefile["player"], playerInventory);
         DeserializeInventory((JObject)savefile["warehouse"], warehouseInventory);
     }
+
     private JObject SerializeInventory(Dictionary<int, SavedItem> inventory)
     {
         JObject jItems = new JObject();
@@ -128,7 +165,7 @@ public class SaveSystemComponent : MonoBehaviour
         foreach(var objet in toDeserialize.Properties())
         {
             var itemID = objet.Value.Value<string>("item");
-            var item = GameSystem.Instance.itemDB[itemID];
+            var item = itemDB[itemID];
             var quantity = objet.Value.Value<int>("quantity");
             dictionary[int.Parse(objet.Name)] = new SavedItem(item, quantity);
         }

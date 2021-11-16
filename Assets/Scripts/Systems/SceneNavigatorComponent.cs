@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class SceneNavigatorComponent : MonoBehaviour
 {
-    public const int WORLD = 0;
-    public const int WAREHOUSE = 1;
+    public const int MENU = 0;
+    public const int WORLD = 1;
+    public const int WAREHOUSE = 2;
 
     private bool isLoading;
 

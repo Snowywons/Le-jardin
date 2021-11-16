@@ -25,8 +25,9 @@ public class DiscountComponent : MonoBehaviour
 
     private void Randomize()
     {
+        SaveSystemComponent save = FindObjectOfType<SaveSystemComponent>();
         List<int> allDays = Enumerable.Range(1, 31).ToList();
-        List<PlantType> plantTypes = GameSystem.Instance.Plants;
+        List<PlantType> plantTypes = save.plants;
 
         int discountsCount = UnityEngine.Random.Range(minDiscountsCount, maxDiscountsCount);
 

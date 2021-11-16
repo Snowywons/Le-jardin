@@ -127,7 +127,7 @@ public class ClockComponent : MonoBehaviour
         eventsOnNextDay?.Invoke();
         SetPause(true);
         if (currentDay < 31)
-            FindObjectOfType<SceneNavigatorComponent>().Load(1);
+            FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WAREHOUSE);
     }
 
     //public int GetDay() => duration > 0 ? ((int)time / duration) + 1 : (int)time;

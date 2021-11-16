@@ -189,7 +189,6 @@ public class MerchantComponent : MonoBehaviour
                 {
                     var listItem = Instantiate(prefabItem, panel);
                     listItem.merchant = this;
-                    var plante = GameSystem.Instance.Plants.Where(p => p.Name == savedItem.Value.item.Name).FirstOrDefault();
                     listItem.item = savedItem.Value.item;
                     listItem.quantity.text = $"{savedItem.Value.quantity}";
                 }
