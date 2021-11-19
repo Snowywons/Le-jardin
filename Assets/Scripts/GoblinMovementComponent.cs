@@ -18,6 +18,7 @@ public class GoblinMovementComponent : MonoBehaviour
     private bool isWalking;
     private float yRotation;
     private float initYRotation;
+    public Animator animator;
 
     private DiscountComponent discountComponent;
 
@@ -32,38 +33,38 @@ public class GoblinMovementComponent : MonoBehaviour
     private IEnumerator Walk()
     {
         isWalking = true;
+        animator.SetBool("isWalking", true);
+        yield return null;
 
-        float time = 0;
-
-        Vector3 from, to;
+        Vector3 to;
 
         if (direction.Equals(Direction.North))
         {
-            from = startPoint.position;
             to = endPoint.position;
             yRotation = 0;
             direction = Direction.South;
         }
         else
         {
-            from = endPoint.position;
             to = startPoint.position;
             yRotation = 180;
             direction = Direction.North;
         }
 
-        from.y = transform.position.y;
         to.y = transform.position.y;
         transform.localRotation = Quaternion.Euler(0, initYRotation + yRotation, 0);
 
-        while (time < 1)
+        do
         {
-            transform.position = Vector3.Lerp(from, to, time);
-            time += Time.deltaTime * walkSpeed;
+            transform.position = Vector3.MoveTowards(transform.position, to, walkSpeed * Time.deltaTime);
             yield return null;
         }
+        while (Vector3.Distance(transform.position, to) > 0.0001f);
+
+        transform.position = to;
 
         isWalking = false;
+        animator.SetBool("isWalking", false);
     }
 
     public void Appear()
