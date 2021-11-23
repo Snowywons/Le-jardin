@@ -697,7 +697,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "D\xE9buter la journ\xE9e"
+  m_Text: Aller au jardin
 --- !u!222 &60454913
 CanvasRenderer:
   m_ObjectHideFlags: 0
