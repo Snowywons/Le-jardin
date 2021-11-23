@@ -16,10 +16,13 @@ public class TileComponent : MonoBehaviour
     [SerializeField] GameObject outline;
 
     [HideInInspector] public Transform modele;
+    public TilePopupComponent popupPrefab;
 
     public bool instantGrow; // For Debug Only
 
     public static HashSet<TileComponent> tiles = new HashSet<TileComponent>();
+
+    private TilePopupComponent popup;
 
     private void Start()
     {
@@ -52,6 +55,11 @@ public class TileComponent : MonoBehaviour
             for (int i = 0; i < plante.maturingTime; i++, isWet = true)
                 OnDayAdvance();
         }
+
+        var popupContainer = FindObjectOfType<TilePopupContainer>();
+        popup = Instantiate(popupPrefab, popupContainer.transform, false);
+        popup.UpdateImage(plante, age);
+        popup.transform.position = Camera.main.WorldToScreenPoint(gameObject.transform.position) + new Vector3(0, 20, 0);
     }
 
     public bool Plant(PlantType type)
@@ -60,6 +68,7 @@ public class TileComponent : MonoBehaviour
         {
             plante = type;
             SetAge(0);
+            popup.UpdateImage(plante, age);
             return true;
         }
         return false;
@@ -87,6 +96,7 @@ public class TileComponent : MonoBehaviour
         {
             GameSystem.Instance.AddScorePoints(plante.scorePoints);
             TileReset();
+            popup.UpdateImage(plante, age);
             return true;
         }
 
