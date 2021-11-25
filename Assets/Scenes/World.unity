@@ -8908,15 +8908,15 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1787849991}
   - {fileID: 1308578214}
   - {fileID: 1203809272}
   - {fileID: 919478123}
   - {fileID: 931925119}
-  - {fileID: 1004364883}
   - {fileID: 515147986}
   - {fileID: 1447515469}
   - {fileID: 1394710395}
-  - {fileID: 1787849991}
+  - {fileID: 1004364883}
   - {fileID: 176916802}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -14533,7 +14533,7 @@ RectTransform:
   m_Children:
   - {fileID: 430608051}
   m_Father: {fileID: 564874241}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14885,7 +14885,7 @@ RectTransform:
   m_Children:
   - {fileID: 519748759}
   m_Father: {fileID: 564874241}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -16560,7 +16560,7 @@ RectTransform:
   - {fileID: 1724512024}
   - {fileID: 1034437218}
   m_Father: {fileID: 564874241}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -24669,7 +24669,7 @@ RectTransform:
   - {fileID: 1840568086}
   - {fileID: 1872970176}
   m_Father: {fileID: 564874241}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -26561,7 +26561,7 @@ RectTransform:
   - {fileID: 2016442651}
   - {fileID: 1832315346}
   m_Father: {fileID: 564874241}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -33080,7 +33080,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 564874241}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

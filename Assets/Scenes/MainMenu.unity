@@ -2901,7 +2901,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Effets - Mixkit
 
-    Musique - Kevin MacLeod'
+    Musique - Kevin MacLeod
+
+    Louis-Charles Many'
 --- !u!222 &829478782
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3508,7 +3510,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 667228728}
-  - {fileID: 1976777326}
   m_Father: {fileID: 965316}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

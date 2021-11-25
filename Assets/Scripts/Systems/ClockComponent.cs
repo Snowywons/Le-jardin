@@ -54,12 +54,12 @@ public class ClockComponent : MonoBehaviour
     {
         if (isPaused || !ready) return;
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            savesystem.currentDay = 31;
-            NextDay();
-            return;
-        }
+        //if (Input.GetKeyDown(KeyCode.Return))
+        //{
+        //    savesystem.currentDay = 31;
+        //    NextDay();
+        //    return;
+        //}
 
         float t = daySpeed * Time.deltaTime;
         savesystem.currentDayTime += t;
@@ -127,9 +127,10 @@ public class ClockComponent : MonoBehaviour
         savesystem.currentDayTime = 0;
         eventsOnNextDay?.Invoke();
         SetPause(true);
-        if (savesystem.currentDay < 31) {
-            Debug.Log("Load Warehouse");
-            FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WAREHOUSE); }
+        if (savesystem.currentDay <= 31) 
+        {
+            FindObjectOfType<SceneNavigatorComponent>().Load(SceneNavigatorComponent.WAREHOUSE); 
+        }
     }
 
     //public int GetDay() => duration > 0 ? ((int)time / duration) + 1 : (int)time;

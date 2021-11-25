@@ -26,11 +26,11 @@ public class MerchantComponent : MonoBehaviour
     [SerializeField] Vector2 selectedButtonSize;
 
     [HideInInspector] public bool isSelling;
-    private const float sellingPriceFactor = 0.50f; // Normal Day. Revendu à 50% de son prix de base
+    private const float sellingPriceFactor = 0.80f; // Normal Day. Revendu à 80% de son prix de base
 
-    private const float sellingDiscountFactor = 0.65f; // Discount Day. Revendu à 65% de son prix de base
-    private const float buyingDiscountFactor = 0.75f; // Discount Day. Acheté à 75% de son prix de base
-    private const float goblinSellingDiscountFactor = 0.90f; // Goblin Discount Day. Revendu à 90% de son prix de base
+    private const float sellingDiscountFactor = 0.85f; // Discount Day. Revendu à 85% de son prix de base
+    private const float buyingDiscountFactor = 0.90f; // Discount Day. Acheté à 90% de son prix de base
+    private const float goblinSellingDiscountFactor = 0.95f; // Goblin Discount Day. Revendu à 95% de son prix de base
 
     private SaveSystemComponent savesystem;
     private DiscountComponent discountComponent;
