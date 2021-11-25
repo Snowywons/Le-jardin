@@ -222,11 +222,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5460da41b91db740bd1d50c8170b422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneId: 0
+  isFarmable: 0
   isWet: 0
   plante: {fileID: 0}
   age: 0
   wetMaterial: {fileID: 2100000, guid: e02a5386816678f4bade47633fa8fc51, type: 2}
   outline: {fileID: 174884130339111087}
+  modele: {fileID: 0}
+  popupPrefab: {fileID: 6799567765350876347, guid: 6ccba53afcf68644fa0b184cc6705d65, type: 3}
   instantGrow: 0
 --- !u!65 &2778059860668008645
 BoxCollider:
