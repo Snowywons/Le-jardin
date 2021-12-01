@@ -189,6 +189,7 @@ public class SaveSystemComponent : MonoBehaviour
     }
 }
 
+
 public struct SavedItem
 {
     public InventoryItem item;

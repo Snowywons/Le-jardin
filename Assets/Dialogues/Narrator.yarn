@@ -2,29 +2,39 @@ title: Narrator.FirstTime
 tags:
 ---
 
-Bienvenue dans ton jardin, jeune pousse! Tu vas voir, il y a plein de belles choses à y planter. 
-Je vais te montrer tout ce qu'il y a à faire dans le coin! 
-Qu'est-ce que tu veux faire?
+Bienvenue dans ton jardin, jeune pousse! Besoin d'un coup de main? Je peux t'aider.
 [[Planter|Narrator.Plant]]
-[[Arroser|Narrator.Water]] 
-[[Dormir|Narrator.Dormir]]
+[[Remise|Narrator.Warehouse]] 
+[[Marché|Narrator.Market]]
 
 ===
 
 title: Narrator.Plant
 
 ---
-Voici comment faire pour planter une graine. 
+Pour faire pousser des plantes, il faut d'abord choisir des graines dans son inventaire, à l'aide des touches numériques du clavier.
+On clique ensuite sur une case vide du jardin pour y planter la graine sélectionnée. 
+Il faut ensuite arroser, en sélectionnant l'arrosoir, une fois par jour pour que la plante pousse. 
+Lorsque la plante est mûre, elle peut être récoltée à l'aide de la pelle. Pour cela, il faut avoir au moins une case d'inventaire vide.
+Si la plante est de nouveau arrosée, le lendemain et les journées suivantes, elle produira des graines.
 ===
 
-title:Narrator.Water
+title:Narrator.Warehouse
 ---
-Voici comment faire pour arroser.
+Pour avoir des outils plus efficace, ou pour stocker le surplus de graines ou de plantes en attendant le moment opportun, il y a la remise.
+Sur le mur droit, il y a une étagère, où on peut glisser les surplus d'inventaire, en mode drag-and-drop. 
+Sur le mur gauche, on retrouve l'établi, qui permet d'effectuer des améliorations, à condition d'avoir suffisamment d'argent. 
+Pour retourner au jardin, il suffit de fermer la fenêtre d'action si elle est ouverte, puis de cliquer sur le bouton en bas de l'écran.
 ===
 
-title:Narrator.Dormir
+title:Narrator.Market
 ---
-<<setSprite Narrateur neutral>>
-D'accord, bonne nuit!
+Il y a deux marchés disponibles dans le jardin, soit le marché public, représenté par le kiosque, ainsi que le goblin, qui passe seulement à certains moments.
+Le goblin a des offres plus avantageuses que le marché public, c'est à dire que les graines qu'il vend sont à un prix moins élevé, et qu'il rachète les légumes plus cher.
+Pour savoir quand le goblin passe, il suffit d'ouvrir le calendrier, en cliquant sur la date dans le coin supérieur droit de l'écran. 
+On peut également voir sur le calendrier que certaines journées sont marquées d'une plante en particulier. 
+Cela veut dire que lors de cette journée, les prix dans le marché public, que ce soit pour vendre ou acheter, sont plus avantageux.
 ===
+
+
 
